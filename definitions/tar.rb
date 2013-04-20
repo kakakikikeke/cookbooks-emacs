@@ -1,0 +1,10 @@
+define :decompress, :path => "/tmp/", :tar_file => "" do
+  bash "decompress_tar" do
+    user "root"
+    cwd #{params[:path]}
+    code <<-EOF
+    cd #{params[:path]}
+    tar xvf #{params[:tar_file]}
+    EOF
+  end
+end

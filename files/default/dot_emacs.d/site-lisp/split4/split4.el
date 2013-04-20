@@ -1,0 +1,10 @@
+(defun split4()
+  "A screen is able to split into 4."
+  (interactive)
+  (split-window-horizontally)
+  (split-window-vertically)
+  (setq count 0)
+  (while (< count 2)
+    (other-window 1)
+    (setq count (+ 1 count)))
+  (split-window-vertically))
