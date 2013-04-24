@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: ori-emacs
+# Cookbook Name:: cookbooks-emacs 
 # Recipe:: default
 #
-# Copyright 2013, Example Com
+# Copyright 2013, kakakikikeke
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,31 +17,42 @@
 # limitations under the License.
 #
 
-cookbook_file "dot_emacs" do
-  backup 5
-  path "#{node["emacs"]["dir"]}.emacs"
-  mode 00644
-  action :create
+if node["emacs"]["install"]["full"]
+  cookbook_file "dot_emacs" do
+    backup 5
+    path "#{node["emacs"]["dir"]}.emacs"
+    mode 00644
+    action :create
+  end
+else
+  cookbook_file "dot_emacs_simple" do
+    backup 5
+    path "#{node["emacs"]["dir"]}.emacs"
+    mode 00644
+    action :create
+  end
 end
 
-directory "#{node["emacs"]["dir"]}.emacs.d" do
-  owner "root"
-  group "root"
-  mode 00644
-  action :create  
-end
+if node["emacs"]["install"]["full"]
+  directory "#{node["emacs"]["dir"]}.emacs.d" do
+    owner "root"
+    group "root"
+    mode 00644
+    action :create  
+  end
 
-remote_directory "dot_emacs.d" do
-  files_backup 5
-  path "#{node["emacs"]["dir"]}.emacs.d"
-  owner "root"
-  group "root"
-  files_owner "root"
-  files_group "root" 
-  files_mode 00644
-  recursive true
-  action :create
-  purge true
+  remote_directory "dot_emacs.d" do
+    files_backup 5
+    path "#{node["emacs"]["dir"]}.emacs.d"
+    owner "root"
+    group "root"
+    files_owner "root"
+    files_group "root" 
+    files_mode 00644
+    recursive true
+    action :create
+    purge true
+  end
 end
 
 cookbook_file "emacs-23.4.tar.gz" do
@@ -60,3 +71,4 @@ make_install "emacs-install" do
   test_flg true
   configure_flg true
 end
+

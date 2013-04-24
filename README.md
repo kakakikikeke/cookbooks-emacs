@@ -57,6 +57,15 @@ EOF
 ```
 chef-solo -j emacs.json
 ```
+Attributes
+----------
+* default['emacs']['dir']
+  * .emacsと.emacs.dを設置するディレクトリ
+* default['emacs']['tar_save_dir']
+  * tarを展開していインストールするため展開先のディレクトリを指定する
+* default['emacs']['install']['full']
+  * jdeやflymakeなどJavaの開発環境もインストールする場合はtrueにする
+  * キーバインド等の最小限の設定のみでいいならばfalseにする
 
 注意事項
 --------
