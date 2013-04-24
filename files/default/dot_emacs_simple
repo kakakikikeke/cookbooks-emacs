@@ -1,0 +1,46 @@
+; 8. for layout key
+(global-set-key "\C-\\" 'undo)
+(global-unset-key "\C-h")
+(global-set-key "\C-h" 'delete-backward-char)
+(global-set-key "\M-g" 'goto-line)
+(global-unset-key "\C-xh")
+(global-set-key "\M-a" 'mark-whole-buffer)
+(global-unset-key "\C-x3")
+(global-set-key "\C-x5" 'split-window-horizontally)
+(global-unset-key "\C-o")
+(global-set-key "\C-o" 'other-window)
+(global-unset-key "\C-]")
+(global-set-key "\C-]" 'next-buffer)
+(global-set-key "\C-c\C-x" 'eval-buffer)
+
+; 10. for save backup file
+(setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
+
+; 11. for ignore warning when open over large file (under 25MB).
+(setq large-file-warning-threshold (* 25 1024 1024))
+
+; 13. for insert-number (original elisp)
+(load-file "~/.emacs.d/site-lisp/insert-number/insert-number.el")
+
+; 14. for split4 (original elisp)
+(load-file "~/.emacs.d/site-lisp/split4/split4.el")
+
+; 15. for start emacs server
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
+; 18. for sort-buffers
+(defun sort-buffers ()
+  "Put the buffer list in alphabetical order."
+  (interactive)
+  (dolist (buff (buffer-list-sorted)) (bury-buffer buff))
+  (when (interactive-p) (list-buffers)))
+  (defun buffer-list-sorted ()
+    (sort (buffer-list) 
+    (function
+      (lambda
+        (a b) (string<
+        (downcase (buffer-name a))
+        (downcase (buffer-name b)))))))
+(global-set-key "\C-c\C-o" 'sort-buffers)
