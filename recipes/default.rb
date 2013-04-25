@@ -17,28 +17,20 @@
 # limitations under the License.
 #
 
+if node["network"]
+  %w{ncurses-devel make gcc w3m}.each do |pkg|
+    yum_package "#{pkg}" do
+      action :install
+    end
+  end
+end
+
 if node["emacs"]["install"]["full"]
   cookbook_file "dot_emacs" do
     backup 5
     path "#{node["emacs"]["dir"]}.emacs"
     mode 00644
     action :create
-  end
-else
-  cookbook_file "dot_emacs_simple" do
-    backup 5
-    path "#{node["emacs"]["dir"]}.emacs"
-    mode 00644
-    action :create
-  end
-end
-
-if node["emacs"]["install"]["full"]
-  directory "#{node["emacs"]["dir"]}.emacs.d" do
-    owner "root"
-    group "root"
-    mode 00644
-    action :create  
   end
 
   remote_directory "dot_emacs.d" do
@@ -53,7 +45,55 @@ if node["emacs"]["install"]["full"]
     action :create
     purge true
   end
+else 
+  cookbook_file "dot_emacs_simple" do
+    backup 5
+    path "#{node["emacs"]["dir"]}.emacs"
+    mode 00644
+    action :create
+  end
+
+  directory "#{node["emacs"]["dir"]}.emacs.d" do
+    owner "root"
+    group "root"
+    mode 00644
+    action :create  
+  end
+
+  directory "#{node["emacs"]["dir"]}.emacs.d/backup" do
+    owner "root"
+    group "root"
+    mode 00644
+    action :create  
+  end
 end
+
+cookbook_file "emacs-w3m-1.4.4.tar.gz" do
+  path "#{node["emacs"]["tar_save_dir"]}emacs-w3m-1.4.4.tar.gz"
+  mode 00644
+  action :create
+end
+
+zdecompress "w3m-master-tar" do
+  path "#{node["emacs"]["tar_save_dir"]}"
+  tar_file "emacs-w3m-1.4.4.tar.gz"
+end
+
+cookbook_file "emacs-w3m.tar" do
+  path "#{node["emacs"]["tar_save_dir"]}emacs-w3m.tar"
+  mode 00644
+  action :create
+end
+
+decompress "w3m-slave-tar" do
+  path "#{node["emacs"]["tar_save_dir"]}"
+  tar_file "emacs-w3m.tar"
+end
+
+#emacs_w3m_install "emacs-w3m-install" do
+#  to_path "emacs-w3m-1.4.4"
+#  from_path "emacs-w3m"
+#end
 
 cookbook_file "emacs-23.4.tar.gz" do
   path "#{node["emacs"]["tar_save_dir"]}emacs-23.4.tar.gz"
