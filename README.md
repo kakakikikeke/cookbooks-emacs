@@ -12,10 +12,16 @@ http://kakakikikeke.blogspot.com/2013/01/emacs.html
 前提条件
 --------
 
-* Java6.0以上がインストールされている
-* JAVA_HOMEが設定されている
-* ncurses-devel がインストールされている
-* make gcc がインストールされている
+* 簡易インストール（デフォルト）の場合
+  * make gcc autoconf ncurses-devel がインストールされている（ネットワークが使える環境であれば本cookbooksでインストールすることも可能です）
+* フルインストールの場合
+  * Java6.0以上がインストールされている（jde使用のため）
+  * JAVA_HOMEが設定されている（jde使用のため）
+
+動作環境
+--------
+
+* CentOS 6.4 64bit上での動作は確認しています
 
 インストール手順
 ----------------
@@ -57,21 +63,28 @@ EOF
 ```
 chef-solo -j emacs.json
 ```
+
 Attributes
 ----------
+
 * default['emacs']['dir']
+  * デフォルトの値は「/root/」
   * .emacsと.emacs.dを設置するディレクトリ
 * default['emacs']['tar_save_dir']
+  * デフォルトの値は「/tmp/」
   * tarを展開していインストールするため展開先のディレクトリを指定する
 * default['emacs']['install']['full']
-  * jdeやflymakeなどJavaの開発環境もインストールする場合はtrueにする
+  * デフォルトの値は「false」
+  * jdeやflymakeなどJavaの開発環境も含めたフルインストールをする場合はtrueにする
   * キーバインド等の最小限の設定のみでいいならばfalseにする
+* default['network']
+  * デフォルトの値は「true」
+  * インターネットに接続できる環境があればtrueにする（必要なパッケージのyumインストールを実施できます）
 
 注意事項
 --------
 
-* w3mは別途 emacs-w3m が必要なためデフォルトでは.emacsがコメントアウトされています
-* Javaをインストールするのはjdeをインストールするためです（jdeがひつようなければ.emacsをコメントしてください）
+* Javaをインストールするのはjdeをインストールするためです（フルインストール後にjdeがひつようなければ.emacsをコメントしてください）
 * jdeの読み込みが遅く起動が重いので使用しない場合は.emacsの「1. for jdee」の部分をコメントアウトしてください
 * emacsはソースコードからコンパイルしてインストールします
-* 拡張lispもすでにcookbooksのfilesにおいてあるので、インターネットにつながらない環境でも実行可能です
+* 拡張lispもすでにcookbooksのfilesにおいてあるので、インターネットにつながらない環境でも実行可能です（簡易インストールする場合の前提条件はクリアしている必要あり）

@@ -93,8 +93,8 @@
 (setq large-file-warning-threshold (* 25 1024 1024))
 
 ; 12. for w3m
-;(require 'w3m-load)
-;(setq browse-url-browser-function 'w3m-browse-url)
+(require 'w3m-load)
+(setq browse-url-browser-function 'w3m-browse-url)
 ;(setq jde-jdk-doc-url "file:///usr/local/java/docs/api/overview-summary.html")
 
 ; 13. for insert-number (original elisp)
