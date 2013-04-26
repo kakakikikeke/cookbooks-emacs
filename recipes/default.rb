@@ -17,15 +17,35 @@
 # limitations under the License.
 #
 
+# 1. install yum package, when you can use network.
 if node["network"]
-  %w{ncurses-devel make gcc w3m}.each do |pkg|
+  %w{ncurses-devel make gcc w3m autoconf}.each do |pkg|
     yum_package "#{pkg}" do
       action :install
     end
   end
 end
 
-if node["emacs"]["install"]["full"]
+# 2. install the emacs (ver 23.4).
+cookbook_file "emacs-23.4.tar.gz" do
+  path "#{node["emacs"]["tar_save_dir"]}emacs-23.4.tar.gz"
+  mode 00644
+  action :create
+end
+
+decompress "emacs-tar" do
+  path "#{node["emacs"]["tar_save_dir"]}"
+  tar_file "emacs-23.4.tar.gz"
+end
+
+make_install "emacs-install" do
+  path "#{node["emacs"]["tar_save_dir"]}emacs-23.4"
+  test_flg true
+  configure_flg true
+end
+
+# 3. config a emacs in full install.
+if node["emacs"]["install"]["full"] && node["network"]
   cookbook_file "dot_emacs" do
     backup 5
     path "#{node["emacs"]["dir"]}.emacs"
@@ -45,7 +65,36 @@ if node["emacs"]["install"]["full"]
     action :create
     purge true
   end
-else 
+
+  cookbook_file "emacs-w3m-1.4.4.tar.gz" do
+    path "#{node["emacs"]["tar_save_dir"]}emacs-w3m-1.4.4.tar.gz"
+    mode 00644
+    action :create
+  end
+  
+  zdecompress "w3m-master-tar" do
+    path "#{node["emacs"]["tar_save_dir"]}"
+    tar_file "emacs-w3m-1.4.4.tar.gz"
+  end
+  
+  cookbook_file "emacs-w3m.tar" do
+    path "#{node["emacs"]["tar_save_dir"]}emacs-w3m.tar"
+    mode 00644
+    action :create
+  end
+  
+  decompress "w3m-slave-tar" do
+    path "#{node["emacs"]["tar_save_dir"]}"
+    tar_file "emacs-w3m.tar"
+  end
+  
+  emacs_w3m_install "emacs-w3m-install" do
+    to_path "#{node["emacs"]["tar_save_dir"]}emacs-w3m"
+    from_path "#{node["emacs"]["tar_save_dir"]}emacs-w3m-1.4.4"
+    configure_flg true
+  end
+# 4. config a emacs in simple install.
+else
   cookbook_file "dot_emacs_simple" do
     backup 5
     path "#{node["emacs"]["dir"]}.emacs"
@@ -67,48 +116,3 @@ else
     action :create  
   end
 end
-
-cookbook_file "emacs-w3m-1.4.4.tar.gz" do
-  path "#{node["emacs"]["tar_save_dir"]}emacs-w3m-1.4.4.tar.gz"
-  mode 00644
-  action :create
-end
-
-zdecompress "w3m-master-tar" do
-  path "#{node["emacs"]["tar_save_dir"]}"
-  tar_file "emacs-w3m-1.4.4.tar.gz"
-end
-
-cookbook_file "emacs-w3m.tar" do
-  path "#{node["emacs"]["tar_save_dir"]}emacs-w3m.tar"
-  mode 00644
-  action :create
-end
-
-decompress "w3m-slave-tar" do
-  path "#{node["emacs"]["tar_save_dir"]}"
-  tar_file "emacs-w3m.tar"
-end
-
-#emacs_w3m_install "emacs-w3m-install" do
-#  to_path "emacs-w3m-1.4.4"
-#  from_path "emacs-w3m"
-#end
-
-cookbook_file "emacs-23.4.tar.gz" do
-  path "#{node["emacs"]["tar_save_dir"]}emacs-23.4.tar.gz"
-  mode 00644
-  action :create
-end
-
-decompress "emacs-tar" do
-  path "#{node["emacs"]["tar_save_dir"]}"
-  tar_file "emacs-23.4.tar.gz"
-end
-
-make_install "emacs-install" do
-  path "#{node["emacs"]["tar_save_dir"]}emacs-23.4"
-  test_flg true
-  configure_flg true
-end
-
