@@ -26,7 +26,19 @@ if node["network"]
   end
 end
 
-# 2. install the emacs (ver 23.4).
+# 2. install the emacsd init script for using service command.
+template "/etc/init.d/emacsd" do
+  source "emacsd.erb"
+  mode 00755
+  owner "root"
+  group "root"
+  variables({
+    :path => node["emacs"]["path"],
+    :uid => node["emacs"]["uid"]
+  })
+end
+
+# 3. install the emacs (ver 23.4).
 cookbook_file "emacs-23.4.tar.gz" do
   path "#{node["emacs"]["tar_save_dir"]}emacs-23.4.tar.gz"
   mode 00644
@@ -44,7 +56,7 @@ make_install "emacs-install" do
   configure_flg true
 end
 
-# 3. config a emacs in full install.
+# 4. config a emacs in full install.
 if node["emacs"]["install"]["full"] && node["network"]
   cookbook_file "dot_emacs" do
     backup 5
@@ -93,7 +105,7 @@ if node["emacs"]["install"]["full"] && node["network"]
     from_path "#{node["emacs"]["tar_save_dir"]}emacs-w3m-1.4.4"
     configure_flg true
   end
-# 4. config a emacs in simple install.
+# 5. config a emacs in simple install.
 else
   cookbook_file "dot_emacs_simple" do
     backup 5
