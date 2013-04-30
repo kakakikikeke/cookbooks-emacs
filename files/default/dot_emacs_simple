@@ -19,12 +19,6 @@
 ; 11. for ignore warning when open over large file (under 25MB).
 (setq large-file-warning-threshold (* 25 1024 1024))
 
-; 13. for insert-number (original elisp)
-(load-file "~/.emacs.d/site-lisp/insert-number/insert-number.el")
-
-; 14. for split4 (original elisp)
-(load-file "~/.emacs.d/site-lisp/split4/split4.el")
-
 ; 15. for start emacs server
 (require 'server)
 (unless (server-running-p)
