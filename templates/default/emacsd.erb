@@ -12,7 +12,7 @@
 ### END INIT INFO
 
 # Local Settings
-
+PATH=$PATH:<%= @path %>
 EMACS_PATH=<%= @path %>
 
 # emacs location.
@@ -29,7 +29,7 @@ EE_EMACS_FAIL_TO_STOP=4
 
 if [ -z `which emacs` ]
 then
-    log_daemon_msg "Error: Emacs not found. emacsd will now exit."
+    echo -n "Error: Emacs not found. emacsd will now exit."
     exit $EE_EMACS_NOT_FOUND
 fi
 

@@ -38,6 +38,14 @@ template "/etc/init.d/emacsd" do
   })
 end
 
+service "emacsd" do
+  if node["emacs"]["chkconfig"]
+    action :enable
+  else 
+    action :disable
+  end
+end
+
 # 3. install the emacs (ver 23.4).
 cookbook_file "emacs-23.4.tar.gz" do
   path "#{node["emacs"]["tar_save_dir"]}emacs-23.4.tar.gz"
