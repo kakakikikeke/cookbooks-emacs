@@ -6,8 +6,14 @@ emacs23.4と各種必要な拡張lispをインストールしてくれるcookboo
 インストールする拡張lisp一覧
 ----------------------------
 
-* 一覧  
-http://kakakikikeke.blogspot.com/2013/01/emacs.html
+* 簡易インストール（デフォルト）の場合
+  * キーバインド
+  * バックアップの一元管理
+  * emacs server設定
+  * buffer-listの自動ソート設定
+* フルインストールの場合
+  * 上記 + jdeなどの開発環境一式
+  * http://kakakikikeke.blogspot.com/2013/01/emacs.html
 
 前提条件
 --------
@@ -15,13 +21,14 @@ http://kakakikikeke.blogspot.com/2013/01/emacs.html
 * 簡易インストール（デフォルト）の場合
   * make gcc autoconf ncurses-devel がインストールされている（ネットワークが使える環境であれば本cookbooksでインストールすることも可能です）
 * フルインストールの場合
+  * make gcc autoconf ncurses-devel がインストールされている（ネットワークが使える環境であれば本cookbooksでインストールすることも可能です）
   * Java6.0以上がインストールされている（jde使用のため）
   * JAVA_HOMEが設定されている（jde使用のため）
 
 動作環境
 --------
 
-* CentOS 6.4 64bit上での動作は確認しています
+* CentOS 6.4 64bit上での動作は確認しています（RedHat系OS以外では動作しないと思われます）
 
 インストール手順
 ----------------
@@ -80,6 +87,23 @@ Attributes
 * default['network']
   * デフォルトの値は「true」
   * インターネットに接続できる環境があればtrueにする（必要なパッケージのyumインストールを実施できます）
+* default['emacs']['path']
+  * デフォルトの値は「/usr/local/bin/」
+  * emacsをインストールするパス、基本はこのままで問題なし
+  * 本cookbooksでインストールするemacs以外を起動スクリプトから起動させたい場合にはそのパスを指定する
+* default['emacs']['uid']
+  * デフォルトの値は「0（root）」
+  * emacs serverを動作させるユーザのidを指定する
+* default['emacs']['chkconfig']
+  * デフォルトの値は「false」
+  * emacs serverをサーバ起動時に自動で立ち上げるためのchkconfigの設定
+  * trueにして自動起動させたい場合にはvisudoを実施してttyの設定を変更する必要があります
+```
+visudo
+Defaults    requiretty
+↓
+#Defaults    requiretty
+```
 
 注意事項
 --------
