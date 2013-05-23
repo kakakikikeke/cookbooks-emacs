@@ -12,8 +12,11 @@
 ### END INIT INFO
 
 # Local Settings
-PATH=$PATH:<%= @path %>
+HOME=<%= @home %>
+JAVA_HOME=<%= @java_home %>
+PATH=$PATH:<%= @path %>:$JAVA_HOME/bin/
 EMACS_PATH=<%= @path %>
+export HOME JAVA_HOME PATH EMACS_PATH
 
 # emacs location.
 emacs="emacs"
@@ -48,7 +51,8 @@ then
     fi
 
     echo "Start emacs daemon ..."
-    sudo -u"#"$emacsd_uid $EMACS_PATH$emacs --daemon
+    #sudo -u"#"$emacsd_uid $EMACS_PATH$emacs --daemon
+    $EMACS_PATH$emacs --daemon
 
     if [ "$?" -eq 0 ]
     then

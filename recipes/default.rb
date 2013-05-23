@@ -33,6 +33,8 @@ template "/etc/init.d/emacsd" do
   owner "root"
   group "root"
   variables({
+    :home => node["emacs"]["home"],
+    :java_home => node["emacs"]["java"]["home"],
     :path => node["emacs"]["path"],
     :uid => node["emacs"]["uid"]
   })
