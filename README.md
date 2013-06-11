@@ -120,6 +120,7 @@ Defaults    requiretty
 * jdeの読み込みが遅く起動が重いので使用しない場合は.emacsの「1. for jdee」の部分をコメントアウトしてください
 * emacsはソースコードからコンパイルしてインストールします
 * 拡張lispもすでにcookbooksのfilesにおいてあるので、インターネットにつながらない環境でも実行可能です（簡易インストールする場合の前提条件はクリアしている必要あり）
+* java-auto-completeで補完する場合には http://kakakikikeke.blogspot.jp/2013/03/emacsjava.html の 4. に記載の手順で.java_base.tagを作成してください
 
 トラブルシューディング
 ----------------------
