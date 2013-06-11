@@ -106,6 +106,7 @@ Attributes
   * デフォルトの値は「false」
   * emacs serverをサーバ起動時に自動で立ち上げるためのchkconfigの設定
   * trueにして自動起動させたい場合にはvisudoを実施してttyの設定を変更する必要があります
+
 ```
 visudo
 Defaults    requiretty
