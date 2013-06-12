@@ -132,3 +132,6 @@ Defaults    requiretty
 * 起動してないのにstartを実行するとうまく動作しない
   * pidファイルがあるので、それを削除してください
   * rm /tmp/emacs${emacsd_uid}/server
+* error: The path specified by JAVA_HOME does not exist: /usr/local/java
+  * /etc/init.d/emacsd内でJAVA_HOMEを設定しています
+  * 環境に合わせてJAVA_HOMEを変更してください
