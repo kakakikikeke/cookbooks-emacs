@@ -124,6 +124,19 @@ else
     action :create
   end
 
+  remote_directory "dot_emacs.d_simple" do
+    files_backup 5
+    path "#{node["emacs"]["dir"]}.emacs.d"
+    owner "root"
+    group "root"
+    files_owner "root"
+    files_group "root" 
+    files_mode 00644
+    recursive true
+    action :create
+    purge true
+  end
+
   directory "#{node["emacs"]["dir"]}.emacs.d" do
     owner "root"
     group "root"

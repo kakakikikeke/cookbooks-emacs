@@ -129,3 +129,7 @@
         (downcase (buffer-name a))
         (downcase (buffer-name b)))))))
 (global-set-key "\C-c\C-o" 'sort-buffers)
+
+; 19. for php-mode
+(load-file "~/.emacs.d/site-lisp/php-mode-1.5.0/php-mode.el")
+(push '("\\.php$" . php-mode) auto-mode-alist)
