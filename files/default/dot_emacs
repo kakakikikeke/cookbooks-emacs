@@ -133,3 +133,11 @@
 ; 19. for php-mode
 (load-file "~/.emacs.d/site-lisp/php-mode-1.5.0/php-mode.el")
 (push '("\\.php$" . php-mode) auto-mode-alist)
+
+; 20. for markdown-mode
+(load-file "~/.emacs.d/site-lisp/markdown-mode/markdown-mode.el")
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
