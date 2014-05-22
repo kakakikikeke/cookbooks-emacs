@@ -141,3 +141,7 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+; 21. for dynamic abbrevs
+(global-set-key (kbd "C-t") 'dabbrev-expand)
+(define-key minibuffer-local-map (kbd "C-t") 'dabbrev-expand)
