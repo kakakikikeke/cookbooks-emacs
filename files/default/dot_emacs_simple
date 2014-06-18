@@ -57,7 +57,7 @@
 
 ; 22 for change-dir
 (defun change-dir (dir)
-  (interactive "sdir: ")
+  (interactive (list (read-file-name "dir: ")) )
   (setq default-directory dir)
-  (message "change default-directory %s" 'default-directory)
+  (message "change default-directory %s" default-directory)
 )
