@@ -145,3 +145,10 @@
 ; 21. for dynamic abbrevs
 (global-set-key (kbd "C-t") 'dabbrev-expand)
 (define-key minibuffer-local-map (kbd "C-t") 'dabbrev-expand)
+
+; 22 for change-dir
+(defun change-dir (dir)
+  (interactive "sdir: ")
+  (setq default-directory dir)
+  (message "change default-directory %s" 'default-directory)
+)
