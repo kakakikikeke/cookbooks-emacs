@@ -1,19 +1,19 @@
 ; 1. for jdee
-(unless (featurep 'cedet)
-  (load-file "~/.emacs.d/site-lisp/cedet-1.1/common/cedet.el"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/cedet-1.1/common"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/jdee-2.4.0.1/lisp"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/elib-1.0"))
-(setq jde-check-version-flag nil) ; for error that 'JDEE requires a version of CEDET between 1.0beta2 and 1.0 (found 1.1)'
- (setq defer-loading-jde nil)
- (if defer-loading-jde
-  (progn
-    (autoload 'jde-mode "jde" "JDE mode." t)
-      (setq auto-mode-alist
-        (append '(
-          ("\\.java\\'" . jde-mode)) auto-mode-alist)))
-  (require 'jde))
-(jde-bsh-run)
+;(unless (featurep 'cedet)
+;  (load-file "~/.emacs.d/site-lisp/cedet-1.1/common/cedet.el"))
+;(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/cedet-1.1/common"))
+;(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/jdee-2.4.0.1/lisp"))
+;(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/elib-1.0"))
+;(setq jde-check-version-flag nil) ; for error that 'JDEE requires a version of CEDET between 1.0beta2 and 1.0 (found 1.1)'
+; (setq defer-loading-jde nil)
+; (if defer-loading-jde
+;  (progn
+;    (autoload 'jde-mode "jde" "JDE mode." t)
+;      (setq auto-mode-alist
+;        (append '(
+;          ("\\.java\\'" . jde-mode)) auto-mode-alist)))
+;  (require 'jde))
+;(jde-bsh-run)
 
 ; 2. for yasnippet
 (add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet")
@@ -42,7 +42,7 @@
 
 ; 6. for flymake
 (require 'flymake)
-(setq char_set "SHIFT_JIS")
+(setq char_set "UTF-8")
 (setq classpath 
  (getenv "CLASSPATH"))
 ; nil)
