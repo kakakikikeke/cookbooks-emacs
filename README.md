@@ -135,3 +135,9 @@ Defaults    requiretty
 * error: The path specified by JAVA_HOME does not exist: /usr/local/java
   * /etc/init.d/emacsd内でJAVA_HOMEを設定しています
   * 環境に合わせてJAVA_HOMEを変更してください
+<<<<<<< HEAD
+=======
+* yasnippetなどのsite-elisp配下のファイルがうまくインストールできない
+  * ファイル名に半角スペースが含まれていたりするせいでselinuxの制約に引っかかってしまっているようです
+  * /etc/selinux/conf 内の SELINUX の設定を SELINUX=disabled に変更して再度実行してみてください
+>>>>>>> a652dfe9b8996f917b67122a3609c6dc7fe80310

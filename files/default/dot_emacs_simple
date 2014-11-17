@@ -50,3 +50,17 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+<<<<<<< HEAD
+=======
+
+; 21. for dynamic abbrevs
+(global-set-key (kbd "C-t") 'dabbrev-expand)
+(define-key minibuffer-local-map (kbd "C-t") 'dabbrev-expand)
+
+; 22 for change-dir
+(defun change-dir (dir)
+  (interactive (list (read-file-name "dir: ")) )
+  (setq default-directory dir)
+  (message "change default-directory %s" default-directory)
+)
+>>>>>>> a652dfe9b8996f917b67122a3609c6dc7fe80310
