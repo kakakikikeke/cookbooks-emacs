@@ -1,5 +1,0 @@
-(require 'cl)
-(defun insert-number (to from)
- (interactive "nto: \nnfrom:")
- (loop for i from from to to do (insert (format "(%d)\n" i)))
-)

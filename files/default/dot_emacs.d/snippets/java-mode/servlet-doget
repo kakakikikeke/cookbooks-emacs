@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: servlet-doget
-# key: servlet-doget
-# --
-@Override
-public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       PrintWriter pw = response.getWriter();
-}

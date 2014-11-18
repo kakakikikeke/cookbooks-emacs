@@ -17,137 +17,66 @@
 # limitations under the License.
 #
 
-# 1. install yum package, when you can use network.
-if node["network"]
-  %w{ncurses-devel make gcc w3m autoconf}.each do |pkg|
-    yum_package "#{pkg}" do
-      action :install
-    end
-  end
+# install emacs
+yum_package "emacs" do
+  action :install
 end
 
-# 2. install the emacsd init script for using service command.
-template "/etc/init.d/emacsd" do
-  source "emacsd.erb"
-  mode 00755
-  owner "root"
-  group "root"
-  variables({
-    :home => node["emacs"]["home"],
-    :java_home => node["emacs"]["java"]["home"],
-    :path => node["emacs"]["path"],
-    :uid => node["emacs"]["uid"]
-  })
-end
-
-service "emacsd" do
-  if node["emacs"]["chkconfig"]
-    action :enable
-  else 
-    action :disable
-  end
-end
-
-# 3. install the emacs (ver 23.4).
-cookbook_file "emacs-23.4.tar.gz" do
-  path "#{node["emacs"]["tar_save_dir"]}emacs-23.4.tar.gz"
-  mode 00644
-  action :create
-end
-
-decompress "emacs-tar" do
-  path "#{node["emacs"]["tar_save_dir"]}"
-  tar_file "emacs-23.4.tar.gz"
-end
-
-make_install "emacs-install" do
-  path "#{node["emacs"]["tar_save_dir"]}emacs-23.4"
-  test_flg true
-  configure_flg true
-end
-
-# 4. config a emacs in full install.
-if node["emacs"]["install"]["full"] && node["network"]
+# config a .emacs file
+if node["dot_emacs"]["write"]
   cookbook_file "dot_emacs" do
     backup 5
-    path "#{node["emacs"]["dir"]}.emacs"
+    path "#{node["user"]["home"]}/.emacs"
     mode 00644
     action :create
   end
 
-  remote_directory "dot_emacs.d" do
-    files_backup 5
-    path "#{node["emacs"]["dir"]}.emacs.d"
-    owner "root"
-    group "root"
-    files_owner "root"
-    files_group "root" 
-    files_mode 00644
-    recursive true
-    action :create
-    purge true
+  emacs_needed_dir = [
+    ".emacs.d",
+    ".emacs.d/backup",
+    ".emacs.d/site-lisp",
+  ]
+  emacs_needed_dir.each do |dir|
+    directory "#{node["user"]["home"]}/#{dir}" do
+      mode 00644
+      action :create 
+    end
   end
 
-  cookbook_file "emacs-w3m-1.4.4.tar.gz" do
-    path "#{node["emacs"]["tar_save_dir"]}emacs-w3m-1.4.4.tar.gz"
-    mode 00644
-    action :create
-  end
-  
-  zdecompress "w3m-master-tar" do
-    path "#{node["emacs"]["tar_save_dir"]}"
-    tar_file "emacs-w3m-1.4.4.tar.gz"
-  end
-  
-  cookbook_file "emacs-w3m.tar" do
-    path "#{node["emacs"]["tar_save_dir"]}emacs-w3m.tar"
-    mode 00644
-    action :create
-  end
-  
-  decompress "w3m-slave-tar" do
-    path "#{node["emacs"]["tar_save_dir"]}"
-    tar_file "emacs-w3m.tar"
-  end
-  
-  emacs_w3m_install "emacs-w3m-install" do
-    to_path "#{node["emacs"]["tar_save_dir"]}emacs-w3m"
-    from_path "#{node["emacs"]["tar_save_dir"]}emacs-w3m-1.4.4"
-    configure_flg true
-  end
-# 5. config a emacs in simple install.
-else
-  cookbook_file "dot_emacs_simple" do
-    backup 5
-    path "#{node["emacs"]["dir"]}.emacs"
+  file "#{node["user"]["home"]}/.emacs.d/site-lisp/init.el" do
     mode 00644
     action :create
   end
 
-  remote_directory "dot_emacs.d_simple" do
-    files_backup 5
-    path "#{node["emacs"]["dir"]}.emacs.d"
-    owner "root"
-    group "root"
-    files_owner "root"
-    files_group "root" 
-    files_mode 00644
-    recursive true
-    action :create
-    purge true
-  end
+  # install package.el
+  if node["package"]["manage"]["install"]
+    remote_file "package.el" do
+      source "http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el"
+      path "#{node["user"]["home"]}/.emacs.d/site-lisp/package.el"
+      mode 00644
+      action :create
+    end
 
-  directory "#{node["emacs"]["dir"]}.emacs.d" do
-    owner "root"
-    group "root"
-    mode 00644
-    action :create  
-  end
+    cookbook_file "init_for_package.el" do
+      backup 5
+      path "#{node["user"]["home"]}/.emacs.d/site-lisp/init.el"
+      mode 00644
+      action :create
+    end
 
-  directory "#{node["emacs"]["dir"]}.emacs.d/backup" do
-    owner "root"
-    group "root"
-    mode 00644
-    action :create  
+    # install you specified packages
+    if !node["package"]["install"].empty?
+      node["package"]["install"].each do |pkg|
+        log "package_info" do
+          message pkg
+          level :info
+        end
+        bash "install package" do
+          code <<-EOC
+            emacs -batch -l /root/.emacs --eval "(progn (require (quote package)) (package-initialize) (package-install (quote #{pkg})))"
+          EOC
+        end
+      end
+    end
   end
 end

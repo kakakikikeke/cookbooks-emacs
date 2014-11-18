@@ -1,75 +1,11 @@
-; 1. for jdee
-;(unless (featurep 'cedet)
-;  (load-file "~/.emacs.d/site-lisp/cedet-1.1/common/cedet.el"))
-;(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/cedet-1.1/common"))
-;(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/jdee-2.4.0.1/lisp"))
-;(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/elib-1.0"))
-;(setq jde-check-version-flag nil) ; for error that 'JDEE requires a version of CEDET between 1.0beta2 and 1.0 (found 1.1)'
-; (setq defer-loading-jde nil)
-; (if defer-loading-jde
-;  (progn
-;    (autoload 'jde-mode "jde" "JDE mode." t)
-;      (setq auto-mode-alist
-;        (append '(
-;          ("\\.java\\'" . jde-mode)) auto-mode-alist)))
-;  (require 'jde))
-;(jde-bsh-run)
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+(load "init.el")
 
-; 2. for yasnippet
-(add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet")
-(require 'yasnippet)
-(yas-global-mode 1)
-
-; 3. for auto-complete
-(add-to-list 'load-path "~/.emacs.d/site-lisp/auto-complete-1.3.1")
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/auto-complete-1.3.1/ac-dict")
-(ac-config-default)
-(setq ac-use-menu-map t)
-(define-key ac-menu-map "\C-n" 'ac-next)
-(define-key ac-menu-map "\C-p" 'ac-previous)
-(setq ac-menu-height 10)
-
-; 4. for auto-java-complete
-(add-to-list 'load-path "~/.emacs.d/site-lisp/auto-java-complete")
-(require 'ajc-java-complete-config)
-(add-hook 'java-mode-hook 'ajc-java-complete-mode)
-(add-hook 'find-file-hook 'ajc-4-jsp-find-file-hook)
-
-; 5. for anything
-(add-to-list 'load-path "~/.emacs.d/site-lisp/anything-config")
-(require 'anything-config)
-
-; 6. for flymake
-(require 'flymake)
-(setq char_set "UTF-8")
-(setq classpath 
- (getenv "CLASSPATH"))
-; nil)
-(defun flymake-java-init ()
- (flymake-simple-make-init-impl
-  'flymake-create-temp-with-folder-structure nil nil
-  buffer-file-name
-  'flymake-get-java-cmdline))
-(defun flymake-get-java-cmdline 
- (source base-dir)
- (list "javac" 
-  (if classpath 
-  (list "-classpath" classpath (concat "-J-Dfile.encoding=" char_set) "-encoding" char_set source)
-   (list (concat "-J-Dfile.encoding=" char_set) "-encoding" char_set source))))
- (push '("\\.java$" flymake-java-init) flymake-allowed-file-name-masks)
-(add-hook 'java-mode-hook '(lambda ()
-    (flymake-mode t)))
-
-; 7. for multi-term
-(add-to-list 'load-path "~/.emacs.d/site-lisp/multi-term")
-(require 'multi-term)
- 
-; 8. for layout key
 (global-set-key "\C-\\" 'undo)
 (global-unset-key "\C-h")
 (global-set-key "\C-h" 'delete-backward-char)
 (global-set-key "\M-g" 'goto-line)
+(global-set-key "\M-s" 'replace-string)
 (global-unset-key "\C-xh")
 (global-set-key "\M-a" 'mark-whole-buffer)
 (global-unset-key "\C-x3")
@@ -79,80 +15,13 @@
 (global-unset-key "\C-]")
 (global-set-key "\C-]" 'next-buffer)
 (global-set-key "\C-c\C-x" 'eval-buffer)
-
-; 9. for layout buffer
-; (other-window -1)
-; (split-window-vertically)
-; (list-buffers)
-; (shell)
-
-; 10. for save backup file
-(setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
-
-; 11. for ignore warning when open over large file (under 25MB).
-(setq large-file-warning-threshold (* 25 1024 1024))
-
-; 12. for w3m
-(require 'w3m-load)
-(setq browse-url-browser-function 'w3m-browse-url)
-;(setq jde-jdk-doc-url "file:///usr/local/java/docs/api/overview-summary.html")
-
-; 13. for insert-number (original elisp)
-(load-file "~/.emacs.d/site-lisp/insert-number/insert-number.el")
-
-; 14. for split4 (original elisp)
-(load-file "~/.emacs.d/site-lisp/split4/split4.el")
-
-; 15. for start emacs server
-(require 'server)
-(unless (server-running-p)
-  (server-start))
-
-; 16. for NIFTYCloud SDK for elisp
-;(add-to-list 'load-path "~/.emacs.d/site-lisp/niftycloud")
-;(require 'niftycloud)
-
-; 17. for xml parse
-(load-file "~/.emacs.d/site-lisp/xml/xml.el")
-
-; 18. for sort-buffers
-(defun sort-buffers ()
-  "Put the buffer list in alphabetical order."
-  (interactive)
-  (dolist (buff (buffer-list-sorted)) (bury-buffer buff))
-  (when (interactive-p) (list-buffers)))
-  (defun buffer-list-sorted ()
-    (sort (buffer-list) 
-    (function
-      (lambda
-        (a b) (string<
-        (downcase (buffer-name a))
-        (downcase (buffer-name b)))))))
-(global-set-key "\C-c\C-o" 'sort-buffers)
-
-; 19. for php-mode
-(load-file "~/.emacs.d/site-lisp/php-mode-1.5.0/php-mode.el")
-(push '("\\.php$" . php-mode) auto-mode-alist)
-
-; 20. for markdown-mode
-(load-file "~/.emacs.d/site-lisp/markdown-mode/markdown-mode.el")
-(autoload 'markdown-mode "markdown-mode"
-   "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-<<<<<<< HEAD
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-=======
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
-; 21. for dynamic abbrevs
 (global-set-key (kbd "C-t") 'dabbrev-expand)
 (define-key minibuffer-local-map (kbd "C-t") 'dabbrev-expand)
+(global-set-key "\C-x;" 'anything)
+(global-set-key "\C-c\C-n" 'flycheck-next-error)
+(global-set-key "\C-c\C-p" 'flycheck-previous-error)
 
-; 22 for change-dir
-(defun change-dir (dir)
-  (interactive (list (read-file-name "dir: ")) )
-  (setq default-directory dir)
-  (message "change default-directory %s" default-directory)
-)
->>>>>>> a652dfe9b8996f917b67122a3609c6dc7fe80310
+(setq truncate-lines t)
+(setq truncate-partial-width-windows t)
+
+(setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
