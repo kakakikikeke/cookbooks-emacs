@@ -1,3 +1,4 @@
+name             "cookbooks-emacs"
 maintainer       "kakakikikeke"
 #maintainer_email ""
 license          "Apache 2.0"
