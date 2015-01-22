@@ -87,10 +87,10 @@ default['user']['home'] = "/root"
 ```
 
 * packageのインストールに関して
-package.elの機能を使ってパッケージをインストールします
-attributes/default.rbの`default['package']['install']`にインストールしたいパッケージを設定するとインストールすることができます
-melpaとmarmaladeからもダウンロードすることができます
-存在しないパッケージを指定した場合はchef-soloがエラーとなります
+  * package.elの機能を使ってパッケージをインストールします
+  * attributes/default.rbの`default['package']['install']`にインストールしたいパッケージを設定するとインストールすることができます
+  * melpaとmarmaladeからもダウンロードすることができます
+  * 存在しないパッケージを指定した場合はchef-soloがエラーとなります
 
 Tips
 ----
