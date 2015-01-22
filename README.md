@@ -5,12 +5,12 @@ Version
 -------
 
 * CentOS 6.4 over
-* Emacs 23
+* Emacs 24.4
 
 Abstract
 --------
 
-CentOS用にemacsと指定した拡張lispをインストールしてくれるcookbooksです
+CentOS用にemacs24.4と指定した拡張lispをインストールしてくれるcookbooksです
 
 How to Use
 ----------
@@ -26,7 +26,9 @@ chef-solo -v
 * cookbooksインストール
 ```
 mkdir -p /chef-repo/cookbooks
+mkdir -p /chef-repo/roles
 mkdir -p /etc/chef/
+mkdir -p /tmp/chef-solo/
 cd /chef-repo/cookbooks
 yum -y install git
 git clone git://github.com/kakakikikeke/cookbooks-emacs.git
@@ -54,6 +56,12 @@ EOF
 chef-solo -j cookbooks-emacs.json
 ```
 
+インストールが完了すると
+```
+/usr/local/bin/emacs
+```
+にインストールされます
+
 Configure
 ---------
 
@@ -78,7 +86,14 @@ default['package']['install'] = [
 default['user']['home'] = "/root"
 ```
 
+* packageのインストールに関して
+package.elの機能を使ってパッケージをインストールします
+attributes/default.rbの`default['package']['install']`にインストールしたいパッケージを設定するとインストールすることができます
+melpaとmarmaladeからもダウンロードすることができます
+存在しないパッケージを指定した場合はchef-soloがエラーとなります
+
 Tips
 ----
 
-* makeしてinstallする方式は廃止しました、タグv1.0を作成しましたので必要な場合はそちらをご利用ください
+* emacs23をmakeからinstallする方式は廃止しました、タグv1.0を作成しましたので必要な場合はそちらをご利用ください
+* emacs23をyumを使ってinstallする方式は廃止しました、タグv2.0を作成しましたので必要な場合はそちらをご利用ください

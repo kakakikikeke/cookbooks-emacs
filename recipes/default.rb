@@ -2,7 +2,7 @@
 # Cookbook Name:: cookbooks-emacs 
 # Recipe:: default
 #
-# Copyright 2013, kakakikikeke
+# Copyright 2015, kakakikikeke
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,13 +17,45 @@
 # limitations under the License.
 #
 
+# install required packages
+packages = [
+  "gcc",
+  "make",
+  "ncurses-devel",
+]
+packages.each do |package|
+  yum_package package do
+    action :install
+  end
+end
+
+emacs_dir_name="emacs-24.4"
+emacs_file_name="#{emacs_dir_name}.tar.gz"
+tmp_dir="/var/tmp"
+# download a emacs tar.gz package
+remote_file "emacs.tar.gz" do
+  source "http://ftp.gnu.org/gnu/emacs/#{emacs_file_name}"
+  path "#{tmp_dir}/#{emacs_file_name}"
+  mode 00644
+  action :create
+end
+
 # install emacs
-yum_package "emacs" do
-  action :install
+script "install emacs" do
+  interpreter "bash"
+  code <<-EOL
+    cd #{tmp_dir}
+    tar zvxf #{emacs_file_name}
+    cd #{tmp_dir}/#{emacs_dir_name}
+    sh ./configure
+    make
+    make install
+  EOL
 end
 
 # config a .emacs file
 if node["dot_emacs"]["write"]
+
   cookbook_file "dot_emacs" do
     backup 5
     path "#{node["user"]["home"]}/.emacs"
@@ -36,47 +68,35 @@ if node["dot_emacs"]["write"]
     ".emacs.d/backup",
     ".emacs.d/site-lisp",
   ]
+
   emacs_needed_dir.each do |dir|
     directory "#{node["user"]["home"]}/#{dir}" do
       mode 00644
-      action :create 
+      action :create
     end
   end
 
-  file "#{node["user"]["home"]}/.emacs.d/site-lisp/init.el" do
+  cookbook_file "init_for_package.el" do
+    backup 5
+    path "#{node["user"]["home"]}/.emacs.d/site-lisp/init.el"
     mode 00644
     action :create
   end
 
-  # install package.el
-  if node["package"]["manage"]["install"]
-    remote_file "package.el" do
-      source "http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el"
-      path "#{node["user"]["home"]}/.emacs.d/site-lisp/package.el"
-      mode 00644
-      action :create
-    end
+end
 
-    cookbook_file "init_for_package.el" do
-      backup 5
-      path "#{node["user"]["home"]}/.emacs.d/site-lisp/init.el"
-      mode 00644
-      action :create
+emacs_install_dir="/usr/local/bin"
+# install specified elisp package used by package.el
+if !node["package"]["install"].empty?
+  node["package"]["install"].each do |pkg|
+    log "package_info" do
+      message pkg
+      level :info
     end
-
-    # install you specified packages
-    if !node["package"]["install"].empty?
-      node["package"]["install"].each do |pkg|
-        log "package_info" do
-          message pkg
-          level :info
-        end
-        bash "install package" do
-          code <<-EOC
-            emacs -batch -l /root/.emacs --eval "(progn (require (quote package)) (package-initialize) (package-install (quote #{pkg})))"
-          EOC
-        end
-      end
+    bash "install package" do
+      code <<-EOC
+        "#{emacs_install_dir}/"emacs -batch -l /root/.emacs --eval "(progn (require (quote package)) (package-initialize) (package-install (quote #{pkg})))"
+      EOC
     end
   end
 end
