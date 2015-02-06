@@ -21,7 +21,10 @@
 (global-set-key "\C-c\C-n" 'flycheck-next-error)
 (global-set-key "\C-c\C-p" 'flycheck-previous-error)
 
+(electric-indent-mode 0)
 (setq truncate-lines t)
 (setq truncate-partial-width-windows t)
+
+(set-display-table-slot standard-display-table 'wrap ? )
 
 (setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
