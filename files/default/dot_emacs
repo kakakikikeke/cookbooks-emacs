@@ -1,6 +1,15 @@
+;;; .init.el --- init config emacs
+
+;;; Commentary:
+;;;; Author: kakakikikeke
+;;;; Version: 0.1
+
+;;; Code:
+; for load init script
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
 (load "init.el")
 
+; for some keybinds
 (global-set-key "\C-\\" 'undo)
 (global-unset-key "\C-h")
 (global-set-key "\C-h" 'delete-backward-char)
@@ -21,10 +30,29 @@
 (global-set-key "\C-c\C-n" 'flycheck-next-error)
 (global-set-key "\C-c\C-p" 'flycheck-previous-error)
 
+; for electric-indent
 (electric-indent-mode 0)
 (setq truncate-lines t)
 (setq truncate-partial-width-windows t)
 
+; for end character
 (set-display-table-slot standard-display-table 'wrap ? )
 
+; for backup folder
 (setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
+
+; for highlight
+(global-hl-line-mode)
+
+; for number of character selected region
+(line-number-mode t)
+(column-number-mode t)
+(defun count-lines-and-chars ()
+  (if mark-active
+      (format "[%3d:%4d]"
+	      (count-lines (region-beginning) (region-end))
+	      (- (region-end) (region-beginning)))
+    ""))
+(add-to-list 'default-mode-line-format '(:eval (count-lines-and-chars)))
+
+;;; .emacs ends here
