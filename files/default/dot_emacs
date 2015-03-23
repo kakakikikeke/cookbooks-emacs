@@ -61,7 +61,7 @@
 ; for clipborad
 (setq sysname system-type)
 (if (eq sysname 'darwin)
-    (let
+    (progn
       (defun copy-from-osx ()
 	(shell-command-to-string "pbpaste"))
       (defun paste-to-osx (text &optional push)
