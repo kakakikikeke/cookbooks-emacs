@@ -1,0 +1,108 @@
+;;; .init.el --- init config emacs
+
+;;; Commentary:
+;;;; Author: kakakikikeke
+;;;; Version: 0.1
+
+;;; Code:
+; for load init script
+(add-to-list 'load-path "~/.emacs.d/site-lisp")
+(load "init.el")
+
+; for some keybinds
+(global-set-key "\C-\\" 'undo)
+(global-unset-key "\C-h")
+(global-set-key "\C-h" 'delete-backward-char)
+(global-set-key "\M-g" 'goto-line)
+(global-set-key "\M-s" 'replace-string)
+(global-unset-key "\C-xh")
+(global-set-key "\M-a" 'mark-whole-buffer)
+(global-unset-key "\C-x3")
+(global-set-key "\C-x5" 'split-window-horizontally)
+(global-unset-key "\C-o")
+(global-set-key "\C-o" 'other-window)
+(global-unset-key "\C-]")
+(global-set-key "\C-]" 'next-buffer)
+(global-set-key "\C-c\C-x" 'eval-buffer)
+(global-set-key (kbd "C-t") 'dabbrev-expand)
+(define-key minibuffer-local-map (kbd "C-t") 'dabbrev-expand)
+(global-set-key "\C-x;" 'helm-mini)
+(global-set-key "\C-c\C-n" 'flycheck-next-error)
+(global-set-key "\C-c\C-p" 'flycheck-previous-error)
+
+; for electric-indent
+(electric-indent-mode 0)
+(setq truncate-lines t)
+(setq truncate-partial-width-windows t)
+
+; for end character
+(set-display-table-slot standard-display-table 'wrap ? )
+
+; for backup folder
+(setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
+
+; for highlight
+(global-hl-line-mode)
+
+; for number of character selected region
+(line-number-mode t)
+(column-number-mode t)
+(defun count-lines-and-chars ()
+  (if mark-active
+      (format "[%3d:%4d]"
+	      (count-lines (region-beginning) (region-end))
+	      (- (region-end) (region-beginning)))
+    ""))
+; (add-to-list 'default-mode-line-format '(:eval (count-lines-and-chars)))
+
+; for igonre case sensitive
+(custom-set-variables '(read-file-name-completion-ignore-case t))
+
+; for clipborad
+(setq sysname system-type)
+(if (eq sysname 'darwin)
+    (progn
+      (defun copy-from-osx ()
+	(shell-command-to-string "reattach-to-user-namespace pbpaste"))
+      (defun paste-to-osx (text &optional push)
+	(let ((process-connection-type nil))
+	  (let ((proc (start-process "pbcopy" "*Messages*" "reattach-to-user-namespace" "pbcopy")))
+	    (process-send-string proc text)
+	    (process-send-eof proc))))
+      (setq interprogram-cut-function 'paste-to-osx)
+      (setq interprogram-paste-function 'copy-from-osx)
+    )
+    (message "This platform is not mac")
+)
+(if (eq sysname 'cygwin)
+    (progn
+      (defun paste-from-cygwin ()
+        (with-temp-buffer
+          (insert-file-contents "/dev/clipboard")
+          (buffer-string)))
+      (defun cut-to-cygwin (text &optional push)
+        (with-temp-file "/dev/clipboard"
+          (insert text)))
+      (setq interprogram-cut-function 'cut-to-cygwin)
+      (setq interprogram-paste-function 'paste-from-cygwin)
+   )
+   (message "This platform is not cygwin")
+)
+
+(show-paren-mode t)
+
+; for sort-buffers
+(defun sort-buffers ()
+  "Put the buffer list in alphabetical order."
+  (interactive)
+  (dolist (buff (buffer-list-sorted)) (bury-buffer buff))
+  (when (interactive-p) (list-buffers)))
+  (defun buffer-list-sorted ()
+    (sort (buffer-list)
+    (function
+      (lambda
+        (a b) (string<
+        (downcase (buffer-name a))
+        (downcase (buffer-name b)))))))
+(global-set-key "\C-c\C-o" 'sort-buffers)
+;;; .emacs ends here
