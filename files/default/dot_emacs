@@ -27,8 +27,7 @@
 (global-set-key (kbd "C-t") 'dabbrev-expand)
 (define-key minibuffer-local-map (kbd "C-t") 'dabbrev-expand)
 (global-set-key "\C-x;" 'helm-mini)
-(global-set-key "\C-c\C-n" 'flycheck-next-error)
-(global-set-key "\C-c\C-p" 'flycheck-previous-error)
+(global-set-key "\C-c\C-i" 'yas-insert-snippet)
 
 ; for electric-indent
 (electric-indent-mode 0)
