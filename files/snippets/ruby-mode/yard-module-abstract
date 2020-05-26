@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: yard-module-abstract
+# key: yard-module-abstract
+# --
+# Namespace for classes and modules that handle serving documentation over HTTP
+# @since 0.6.0

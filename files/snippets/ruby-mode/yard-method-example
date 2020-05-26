@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: yard-method-example
+# key: yard-method-example
+# --
+# @example Reverse a string
+#   "mystring".reverse #=> "gnirtsym"
+#
+# @example Parse a glob of files
+#   YARD.parse('lib/**/*.rb')

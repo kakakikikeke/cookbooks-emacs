@@ -8,7 +8,6 @@
 ; for package.el
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-(add-to-list 'package-archives  '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
 ; for helm (install 'helm' form package.el)
@@ -51,5 +50,9 @@
 (setq ac-use-menu-map t)
 (define-key ac-menu-map "\C-n" 'ac-next)
 (define-key ac-menu-map "\C-p" 'ac-previous)
+
+; for yasnippet (install 'yasnippet')
+(require 'yasnippet)
+(yas-global-mode 1)
 
 ;;; init.el ends here

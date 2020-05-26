@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: yard-exception-abstract
+# key: yard-exception-abstract
+# --
+# @raise [ExceptionClass] description

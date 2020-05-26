@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: yard-block-abstract
+# key: yard-block-abstract
+# --
+# for block {|a, b, c| ... }
+# @yield [a, b, c] Description of block
+#
+# @yieldparam [optional, types, ...] argname description
+# @yieldreturn [optional, types, ...] description
