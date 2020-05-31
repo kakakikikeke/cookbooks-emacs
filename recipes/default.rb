@@ -55,28 +55,39 @@ when "centos", "redhat", "amazon"
   end
 end
 
-emacs_dir_name="emacs-#{node[:version]}"
-emacs_file_name="#{emacs_dir_name}.tar.gz"
-tmp_dir="/tmp"
-# Download a emacs tar.gz package
-remote_file "emacs.tar.gz" do
-  source "http://ftp.gnu.org/gnu/emacs/#{emacs_file_name}"
-  path "#{tmp_dir}/#{emacs_file_name}"
-  mode "644"
-  action :create
-end
-
 # Install emacs
-script "install emacs" do
-  interpreter "bash"
-  code <<-EOL
-    cd #{tmp_dir}
-    tar zvxf #{emacs_file_name}
-    cd #{tmp_dir}/#{emacs_dir_name}
-    sh ./configure --with-x-toolkit=no
-    make
-    make install
-  EOL
+case node[:platform]
+when "ubuntu" "centos", "redhat", "amazon"
+  emacs_dir_name="emacs-#{node[:version]}"
+  emacs_file_name="#{emacs_dir_name}.tar.gz"
+  tmp_dir="/tmp"
+
+  # Download a emacs tar.gz package
+  remote_file "emacs.tar.gz" do
+    source "http://ftp.gnu.org/gnu/emacs/#{emacs_file_name}"
+    path "#{tmp_dir}/#{emacs_file_name}"
+    mode "644"
+    action :create
+  end
+
+  # Execute an install script
+  script "install emacs" do
+    interpreter "bash"
+    code <<-EOL
+      cd #{tmp_dir}
+      tar zvxf #{emacs_file_name}
+      cd #{tmp_dir}/#{emacs_dir_name}
+      sh ./configure --with-x-toolkit=no
+      make
+      make install
+    EOL
+  end
+when "mac_os_x"
+  # Install with Homebrew
+  homebrew_package "Install emacs with Homebrew" do
+    package_name "emacs"
+    action :install
+  end
 end
 
 # Touch default .emacs
