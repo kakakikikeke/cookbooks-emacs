@@ -10,6 +10,10 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 (package-initialize)
 
+; for robe
+(add-hook 'ruby-mode-hook 'robe-mode)
+(add-hook 'robe-mode-hook 'ac-robe-setup)
+
 ; for helm (install 'helm' form package.el)
 (require 'helm-config)
 (helm-mode 1)

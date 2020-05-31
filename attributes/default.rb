@@ -6,5 +6,7 @@ default[:snippets][:put] = true
 default[:package][:install] = [
   "helm",
   "auto-complete",
-  "yasnippet"
+  "yasnippet",
+  "ruby-mode",
+  "robe"
 ]
