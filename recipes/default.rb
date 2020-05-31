@@ -17,12 +17,13 @@
 # limitations under the License.
 #
 
-home_dir = node['etc']['passwd'][node['current_user']]['dir']
+home_dir = ENV["HOME"]
+
 packages = [
   "gcc",
   "make",
 ]
-# install required packages
+# Install required packages
 case node[:platform]
 when "ubuntu"
   packages.concat [
@@ -57,15 +58,15 @@ end
 emacs_dir_name="emacs-#{node[:version]}"
 emacs_file_name="#{emacs_dir_name}.tar.gz"
 tmp_dir="/tmp"
-# download a emacs tar.gz package
+# Download a emacs tar.gz package
 remote_file "emacs.tar.gz" do
   source "http://ftp.gnu.org/gnu/emacs/#{emacs_file_name}"
   path "#{tmp_dir}/#{emacs_file_name}"
-  mode 00644
+  mode "644"
   action :create
 end
 
-# install emacs
+# Install emacs
 script "install emacs" do
   interpreter "bash"
   code <<-EOL
@@ -78,45 +79,28 @@ script "install emacs" do
   EOL
 end
 
-# config a .emacs file
-if node[:dot_emacs][:write]
-
-  cookbook_file "dot_emacs" do
-    backup 5
-    path "#{home_dir}/.emacs"
-    mode 00644
-    action :create
-  end
-
-  emacs_needed_dir = [
-    ".emacs.d",
-    ".emacs.d/backup",
-    ".emacs.d/site-lisp",
-  ]
-
-  emacs_needed_dir.each do |dir|
-    directory "#{home_dir}/#{dir}" do
-      mode 00644
-      action :create
-    end
-  end
-
-  cookbook_file "init_for_package.el" do
-    backup 5
-    path "#{home_dir}/.emacs.d/site-lisp/init.el"
-    mode 00644
-    action :create
-  end
-
+# Touch default .emacs
+cookbook_file "#{home_dir}/.emacs" do
+  backup 5
+  source "default_dot_emacs"
+  mode "644"
+  owner "#{node[:owner]}"
+  group "#{node[:group]}"
+  action :create
 end
 
 emacs_install_dir="/usr/local/bin"
-# install specified elisp package used by package.el
+# Install specified elisp package used by package.el
 if !node[:package][:install].empty?
   node[:package][:install].each do |pkg|
     log "package_info" do
       message pkg
       level :info
+    end
+    bash "update packages" do
+      code <<-EOC
+        "#{emacs_install_dir}/"emacs -batch -l #{home_dir}/.emacs -q --eval "(progn (require (quote package)) (package-refresh-contents))"
+      EOC
     end
     bash "install package" do
       code <<-EOC
@@ -124,4 +108,73 @@ if !node[:package][:install].empty?
       EOC
     end
   end
+end
+
+# Put a customized .emacs file
+if node[:dot_emacs][:write]
+
+  cookbook_file "#{home_dir}/.emacs" do
+    backup 5
+    source "dot_emacs"
+    owner "#{node[:owner]}"
+    group "#{node[:group]}"
+    mode "644"
+    action :create
+  end
+
+  emacs_needed_dir = [
+    ".emacs.d/backup",
+    ".emacs.d/site-lisp",
+  ]
+
+  emacs_needed_dir.each do |dir|
+    directory "#{home_dir}/#{dir}" do
+      owner "#{node[:owner]}"
+      group "#{node[:group]}"
+      mode "644"
+      action :create
+      recursive true
+    end
+  end
+
+  cookbook_file "#{home_dir}/.emacs.d/site-lisp/init.el" do
+    backup 5
+    source "init_for_package.el"
+    owner "#{node[:owner]}"
+    group "#{node[:group]}"
+    mode "644"
+    action :create
+  end
+
+end
+
+# Put ruby-mode snippet files
+if node[:snippets][:put]
+
+  snippets_needed_dir = [
+    ".emacs.d/snippets",
+  ]
+
+  snippets_needed_dir.each do |dir|
+    directory "#{home_dir}/#{dir}" do
+      owner "#{node[:owner]}"
+      group "#{node[:group]}"
+      mode "644"
+      action :create
+      recursive true
+    end
+  end
+
+  remote_directory "#{home_dir}/.emacs.d/snippets/ruby-mode" do
+    source "snippets/ruby-mode"
+    files_owner "#{node[:owner]}"
+    files_group "#{node[:group]}"
+    files_mode "644"
+    owner "#{node[:owner]}"
+    group "#{node[:group]}"
+    mode "644"
+    action :create
+    recursive true
+  end
+
 end
