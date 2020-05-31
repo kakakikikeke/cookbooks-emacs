@@ -131,7 +131,7 @@ if node[:dot_emacs][:write]
     directory "#{home_dir}/#{dir}" do
       owner "#{node[:owner]}"
       group "#{node[:group]}"
-      mode "644"
+      mode "775"
       action :create
       recursive true
     end
@@ -159,7 +159,7 @@ if node[:snippets][:put]
     directory "#{home_dir}/#{dir}" do
       owner "#{node[:owner]}"
       group "#{node[:group]}"
-      mode "644"
+      mode "775"
       action :create
       recursive true
     end
@@ -172,7 +172,7 @@ if node[:snippets][:put]
     files_mode "644"
     owner "#{node[:owner]}"
     group "#{node[:group]}"
-    mode "644"
+    mode "775"
     action :create
     recursive true
   end
