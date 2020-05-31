@@ -2,14 +2,14 @@
 # name: yard-method-abstract
 # --
 # An alias to {Parser::SourceParser}'s parsing method
-# 
-# @author hawksnowlog
+#
+# @author Full Name
 #
 # @see http://example.com Description of URL
 # @see SomeOtherClass#method
 #
 # @deprecated Use {#my_new_method} instead of this method because
-#   it uses a library that is no longer supported in Ruby 1.9. 
+#   it uses a library that is no longer supported in Ruby 1.9.
 #   The new method accepts the same parameters.
 #
 # @abstract
