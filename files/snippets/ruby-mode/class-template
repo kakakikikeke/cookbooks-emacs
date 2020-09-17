@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: class-template
+# key: class-template
+# --
+class MyClass
+  def initialize(value)
+    @value = value
+  end
+
+  def method
+    puts @value
+  end
+
+  def self.class_method
+    puts "class_method"
+  end
+end
