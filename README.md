@@ -50,7 +50,7 @@ EOF
 * Execute chef-solo
 
 ```
-sudo chef-solo -c ~/chef-repo/client.rb -j ~/chef-repo/cookbooks-emacs.json
+sudo chef-solo -c ~/chef-repo/client.rb -j ~/chef-repo/cookbooks/cookbooks-emacs.json
 ```
 
 After installed, you can use emacs.
