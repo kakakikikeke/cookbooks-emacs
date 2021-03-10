@@ -18,11 +18,12 @@
 #
 
 home_dir = ENV["HOME"]
-
 packages = [
   "gcc",
   "make",
 ]
+emacs_install_dir="/usr/local/bin"
+
 # Install required packages
 case node[:platform]
 when "ubuntu"
@@ -30,11 +31,21 @@ when "ubuntu"
     "libncurses5-dev",
     "libxpm-dev",
     "libjpeg8-dev",
-    "libpng12-dev",
     "libgif-dev",
     "libtiff5-dev",
-    "libgnutls-dev"
   ]
+  case node[:platform_version].to_i
+  when 18
+    packages.concat [
+      "libpng-dev",
+      "libgnutls28-dev"
+    ]
+  else
+    packages.concat [
+      "libpng12-dev",
+      "libgnutls-dev"
+    ]
+  end
   packages.each do |package|
     apt_package package do
       action :install
@@ -57,7 +68,7 @@ end
 
 # Install emacs
 case node[:platform]
-when "ubuntu" "centos", "redhat", "amazon"
+when "ubuntu", "centos", "redhat", "amazon"
   emacs_dir_name="emacs-#{node[:version]}"
   emacs_file_name="#{emacs_dir_name}.tar.gz"
   tmp_dir="/tmp"
@@ -72,6 +83,7 @@ when "ubuntu" "centos", "redhat", "amazon"
 
   # Execute an install script
   script "install emacs" do
+    not_if { File.exists?("#{emacs_install_dir}/emacs") }
     interpreter "bash"
     code <<-EOL
       cd #{tmp_dir}
@@ -100,7 +112,6 @@ cookbook_file "#{home_dir}/.emacs" do
   action :create
 end
 
-emacs_install_dir="/usr/local/bin"
 # Install specified elisp package used by package.el
 if !node[:package][:install].empty?
   node[:package][:install].each do |pkg|
