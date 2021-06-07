@@ -8,5 +8,6 @@ default[:package][:install] = [
   "auto-complete",
   "yasnippet",
   "ruby-mode",
-  "robe"
+  "robe",
+  "treemacs"
 ]
