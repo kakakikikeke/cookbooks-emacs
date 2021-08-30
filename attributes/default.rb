@@ -9,5 +9,6 @@ default[:package][:install] = [
   "yasnippet",
   "ruby-mode",
   "robe",
+  "flymake-ruby",
   "treemacs"
 ]
