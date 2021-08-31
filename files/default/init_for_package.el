@@ -10,11 +10,15 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-; for ruby
-(require 'flymake-ruby)
-(add-hook 'ruby-mode-hook 'flymake-ruby-load)
-(add-hook 'ruby-mode-hook 'robe-mode)
-(add-hook 'robe-mode-hook 'ac-robe-setup)
+; for ruby with solargraph
+(require 'eglot)
+(add-to-list 'eglot-server-programs '(ruby-mode . ("bundle" "exec" "solargraph" "socket" "--port" :autoport)))
+
+; for ruby with robe
+; (require 'flymake-ruby)
+; (add-hook 'ruby-mode-hook 'flymake-ruby-load)
+; (add-hook 'ruby-mode-hook 'robe-mode)
+; (add-hook 'robe-mode-hook 'ac-robe-setup)
 
 ; for helm (install 'helm' form package.el)
 (require 'helm-config)

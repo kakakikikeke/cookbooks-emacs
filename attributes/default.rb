@@ -10,5 +10,6 @@ default[:package][:install] = [
   "ruby-mode",
   "robe",
   "flymake-ruby",
+  "eglot",
   "treemacs"
 ]
