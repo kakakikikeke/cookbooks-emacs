@@ -161,7 +161,7 @@ if node[:dot_emacs][:write]
 
   cookbook_file "#{home_dir}/.emacs.d/site-lisp/init.el" do
     backup 5
-    source "init_for_package.el"
+    source "init.el"
     owner "#{node[:owner]}"
     group "#{node[:group]}"
     mode "644"
