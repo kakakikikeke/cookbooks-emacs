@@ -65,4 +65,7 @@
 (require 'yasnippet)
 (yas-global-mode 1)
 
+; for treemacs
+(save-selected-window (treemacs-select-window))
+
 ;;; init.el ends here
