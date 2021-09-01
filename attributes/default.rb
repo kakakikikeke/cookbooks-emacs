@@ -11,5 +11,6 @@ default[:package][:install] = [
   "robe",
   "flymake-ruby",
   "eglot",
+  "lsp-mode",
   "treemacs"
 ]

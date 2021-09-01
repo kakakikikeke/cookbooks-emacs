@@ -10,9 +10,14 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
-; for ruby with solargraph
-(require 'eglot)
-(add-to-list 'eglot-server-programs '(ruby-mode . ("bundle" "exec" "solargraph" "socket" "--port" :autoport)))
+; for ruby lsp with lsp-mode
+(require 'lsp-mode)
+(setq lsp-solargraph-use-bundler t)
+(add-hook 'ruby-mode-hook 'lsp)
+
+; for ruby lsp with eglot
+; (require 'eglot)
+; (add-to-list 'eglot-server-programs '(ruby-mode . ("bundle" "exec" "solargraph" "socket" "--port" :autoport)))
 
 ; for ruby with robe
 ; (require 'flymake-ruby)
