@@ -25,6 +25,9 @@
 ; (add-hook 'ruby-mode-hook 'robe-mode)
 ; (add-hook 'robe-mode-hook 'ac-robe-setup)
 
+; for python
+(add-hook 'python-mode-hook #'lsp)
+
 ; for helm (install 'helm' form package.el)
 (require 'helm-config)
 (helm-mode 1)
