@@ -76,4 +76,9 @@
 ; for treemacs
 (save-selected-window (treemacs-select-window))
 
+; for mmm-mode
+(require 'mmm-mode)
+(setq mmm-global-mode 'maybe)
+(setq mmm-submode-decoration-level 0)
+
 ;;; init.el ends here
