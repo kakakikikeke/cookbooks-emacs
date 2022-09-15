@@ -14,4 +14,5 @@ default[:package][:install] = [
   "lsp-mode",
   "treemacs",
   "mmm-mode",
+  "web-mode",
 ]
