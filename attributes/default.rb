@@ -1,4 +1,4 @@
-default[:version] = ENV['VERSION'] || '27.1'
+default[:version] = ENV['VERSION'] || '28.2'
 default[:owner] = ENV['OWNER'] || 'vagrant'
 default[:group] = ENV['GROUP'] || 'vagrant'
 default[:dot_emacs][:write] = true
@@ -12,5 +12,6 @@ default[:package][:install] = [
   "flymake-ruby",
   "eglot",
   "lsp-mode",
-  "treemacs"
+  "treemacs",
+  "mmm-mode",
 ]
