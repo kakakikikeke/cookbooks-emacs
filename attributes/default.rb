@@ -13,6 +13,7 @@ default[:package][:install] = [
   "eglot",
   "lsp-mode",
   "treemacs",
+  "projectile",
   "mmm-mode",
   "web-mode",
 ]
