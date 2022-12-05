@@ -12,8 +12,8 @@
 
 ; for ruby lsp with lsp-mode
 (require 'lsp-mode)
-(setq lsp-solargraph-use-bundler t)
-(add-hook 'ruby-mode-hook 'lsp)
+; (setq lsp-solargraph-use-bundler t)
+; (add-hook 'ruby-mode-hook 'lsp)
 
 ; for ruby lsp with eglot
 ; (require 'eglot)
@@ -22,8 +22,8 @@
 ; for ruby with robe
 ; (require 'flymake-ruby)
 ; (add-hook 'ruby-mode-hook 'flymake-ruby-load)
-; (add-hook 'ruby-mode-hook 'robe-mode)
-; (add-hook 'robe-mode-hook 'ac-robe-setup)
+(add-hook 'ruby-mode-hook 'robe-mode)
+(add-hook 'robe-mode-hook 'ac-robe-setup)
 
 ; for python
 (add-hook 'python-mode-hook #'lsp)
