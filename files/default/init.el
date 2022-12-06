@@ -14,13 +14,13 @@
 (global-rbenv-mode)
 
 ; for highlight-symbol
-(require 'auto-highlight-symbol)
-(global-auto-highlight-symbol-mode t)
+; (require 'auto-highlight-symbol)
+; (global-auto-highlight-symbol-mode t)
 
 ; for ruby lsp with lsp-mode
 (require 'lsp-mode)
 ; (setq lsp-solargraph-use-bundler t)
-; (add-hook 'ruby-mode-hook 'lsp)
+(add-hook 'ruby-mode-hook 'lsp)
 
 ; for ruby lsp with eglot
 ; (require 'eglot)

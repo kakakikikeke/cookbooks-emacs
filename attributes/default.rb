@@ -7,7 +7,6 @@ default[:package][:install] = [
   "helm",
   "auto-complete",
   "yasnippet",
-  "auto-highlight-symbol",
   "ruby-mode",
   "rbenv",
   "robe",
