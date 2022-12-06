@@ -2,13 +2,20 @@
 
 ;;; Commentary:
 ;;;; Author: kakakikikeke
-;;;; Version: 0.1
+;;;; Version: 0.2
 
 ;;; Code:
 ; for package.el
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
+
+; for rbenv
+(global-rbenv-mode)
+
+; for highlight-symbol
+(require 'auto-highlight-symbol)
+(global-auto-highlight-symbol-mode t)
 
 ; for ruby lsp with lsp-mode
 (require 'lsp-mode)
@@ -20,8 +27,8 @@
 ; (add-to-list 'eglot-server-programs '(ruby-mode . ("bundle" "exec" "solargraph" "socket" "--port" :autoport)))
 
 ; for ruby with robe
-; (require 'flymake-ruby)
-; (add-hook 'ruby-mode-hook 'flymake-ruby-load)
+(require 'flymake-ruby)
+(add-hook 'ruby-mode-hook 'flymake-ruby-load)
 (add-hook 'ruby-mode-hook 'robe-mode)
 (add-hook 'robe-mode-hook 'ac-robe-setup)
 
