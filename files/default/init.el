@@ -30,7 +30,8 @@
 (require 'flymake-ruby)
 (add-hook 'ruby-mode-hook 'flymake-ruby-load)
 (add-hook 'ruby-mode-hook 'robe-mode)
-(add-hook 'robe-mode-hook 'ac-robe-setup)
+(eval-after-load 'company
+  '(push 'company-robe company-backends))
 
 ; for python
 (add-hook 'python-mode-hook #'lsp)
@@ -69,12 +70,12 @@
                                )))
 
 ; for auto-complete (install 'auto-complete' form package.el)
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20170124.1845/dict")
-(ac-config-default)
-(setq ac-use-menu-map t)
-(define-key ac-menu-map "\C-n" 'ac-next)
-(define-key ac-menu-map "\C-p" 'ac-previous)
+; (require 'auto-complete-config)
+; (add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20170124.1845/dict")
+; (ac-config-default)
+; (setq ac-use-menu-map t)
+; (define-key ac-menu-map "\C-n" 'ac-next)
+; (define-key ac-menu-map "\C-p" 'ac-previous)
 
 ; for yasnippet (install 'yasnippet')
 (require 'yasnippet)

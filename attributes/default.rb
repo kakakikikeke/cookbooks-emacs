@@ -6,8 +6,8 @@ default[:snippets][:put] = true
 default[:package][:install] = [
   ### for omni completion
   "helm",
-  "auto-complete",
   "company",
+  # "auto-complete",
   ### for snippet
   "yasnippet",
   ### for ruby
@@ -23,7 +23,7 @@ default[:package][:install] = [
   ### for side pain
   "treemacs",
   "projectile",
-  # vue
+  ### for vue
   "mmm-mode",
   "web-mode",
 ]
