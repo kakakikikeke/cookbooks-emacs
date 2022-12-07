@@ -29,6 +29,7 @@
 (global-set-key "\C-x;" 'helm-mini)
 (global-set-key "\C-c\C-i" 'yas-insert-snippet)
 (global-set-key "\C-c\C-p" 'treemacs)
+(global-set-key "\C-c\C-tf" 'projectile-find-file)
 
 ; for electric-indent
 (electric-indent-mode 0)
