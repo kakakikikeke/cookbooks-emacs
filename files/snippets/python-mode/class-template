@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: class-template
+# key: class-template
+# --
+class Test():
+    def __init__(self, value):
+        self.value = value
+
+    def method(self):
+        print(self.value)
+
+    @classmethod
+    def class_method(cls):
+        print("class_method")

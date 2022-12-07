@@ -170,7 +170,7 @@ if node[:dot_emacs][:write]
 
 end
 
-# Put ruby-mode snippet files
+# Put ruby-mode,python-mode snippet files
 if node[:snippets][:put]
 
   snippets_needed_dir = [
@@ -187,16 +187,18 @@ if node[:snippets][:put]
     end
   end
 
-  remote_directory "#{home_dir}/.emacs.d/snippets/ruby-mode" do
-    source "snippets/ruby-mode"
-    files_owner "#{node[:owner]}"
-    files_group "#{node[:group]}"
-    files_mode "644"
-    owner "#{node[:owner]}"
-    group "#{node[:group]}"
-    mode "775"
-    action :create
-    recursive true
+  ['ruby', 'python'].each do |lang|
+    remote_directory "#{home_dir}/.emacs.d/snippets/#{lang}-mode" do
+      source "snippets/#{lang}-mode"
+      files_owner "#{node[:owner]}"
+      files_group "#{node[:group]}"
+      files_mode "644"
+      owner "#{node[:owner]}"
+      group "#{node[:group]}"
+      mode "775"
+      action :create
+      recursive true
+    end
   end
 
 end
