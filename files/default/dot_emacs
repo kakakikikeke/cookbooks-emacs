@@ -30,6 +30,7 @@
 (global-set-key "\C-c\C-i" 'yas-insert-snippet)
 (global-set-key "\C-c\C-p" 'treemacs)
 (global-set-key "\C-c\C-tf" 'projectile-find-file)
+(global-set-key "\C-c\C-td" 'flymake-show-diagnostics-buffer)
 
 ; for electric-indent
 (electric-indent-mode 0)
