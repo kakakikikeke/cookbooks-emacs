@@ -16,6 +16,8 @@ default[:package][:install] = [
   "robe",
   "inf-ruby",
   "flymake-ruby",
+  ### for python
+  "lsp-pyright",
   ### for lsp
   "helm-lsp",
   "lsp-mode",

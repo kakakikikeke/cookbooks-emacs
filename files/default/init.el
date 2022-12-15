@@ -17,7 +17,7 @@
 ; (require 'auto-highlight-symbol)
 ; (global-auto-highlight-symbol-mode t)
 
-; for ruby lsp with lsp-mode
+; for ruby lsp with lsp-mode (needs to install solargraph globally via gem command)
 (require 'lsp-mode)
 ; (setq lsp-solargraph-use-bundler t)
 (add-hook 'ruby-mode-hook 'lsp)
@@ -33,8 +33,17 @@
 (eval-after-load 'company
   '(push 'company-robe company-backends))
 
-; for python
-(add-hook 'python-mode-hook #'lsp)
+; for python lsp with lsp-pyright (needs to install pyright globally via pip command)
+; (add-hook 'python-mode-hook #'lsp)
+(leaf lsp-pyright
+  :ensure t
+  :require t
+  :after python
+  :defvar lsp-pyright-venv-path
+  :init
+  (setq lsp-pyright-venv-path "/Users/kakakikikeke/.local/share/virtualenvs/app-xxx")
+  :hook
+  (python-mode-hook . lsp))
 
 ; for helm (install 'helm' form package.el)
 (require 'helm-config)
