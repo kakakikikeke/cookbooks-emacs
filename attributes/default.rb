@@ -28,4 +28,6 @@ default[:package][:install] = [
   ### for vue
   "mmm-mode",
   "web-mode",
+  ### for utils
+  "leaf",
 ]
