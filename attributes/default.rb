@@ -18,6 +18,7 @@ default[:package][:install] = [
   "flymake-ruby",
   ### for python
   "lsp-pyright",
+  "pipenv",
   ### for lsp
   "helm-lsp",
   "lsp-mode",
