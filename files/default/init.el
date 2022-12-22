@@ -45,6 +45,10 @@
   :hook
   (python-mode-hook . lsp))
 
+; for lisp
+(add-hook 'emacs-lisp-mode-hook 'company-mode)
+(add-hook 'lisp-mode-hook 'company-mode)
+
 ; for helm (install 'helm' form package.el)
 (require 'helm-config)
 (helm-mode 1)
