@@ -31,6 +31,7 @@
 (global-set-key "\C-c\C-p" 'treemacs)
 (global-set-key "\C-c\C-tf" 'projectile-find-file)
 (global-set-key "\C-c\C-tu" 'flymake-show-diagnostics-buffer)
+(global-set-key "\C-c\C-tc" 'treemacs-collapse-all-projects)
 
 ; for electric-indent
 (electric-indent-mode 0)
