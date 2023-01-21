@@ -35,6 +35,10 @@
 
 ; for python lsp with lsp-pyright (needs to install pyright globally via pip command)
 ; (add-hook 'python-mode-hook #'lsp)
+(add-hook
+ 'python-mode-hook
+ '(lambda ()
+    (define-key python-mode-map "\C-c\C-p" 'treemacs)))
 (leaf lsp-pyright
   :ensure t
   :require t
