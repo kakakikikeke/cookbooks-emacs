@@ -54,7 +54,8 @@
 (add-hook 'lisp-mode-hook 'company-mode)
 
 ; for helm (install 'helm' form package.el)
-(require 'helm-config)
+; (require 'helm-config) Cannot open load file, No such file or directory, helm-config
+(require 'helm)
 (helm-mode 1)
 (keyboard-translate ?\C-h ?\C-?)
 (defvar helm-source-emacs-commands
