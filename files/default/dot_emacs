@@ -45,7 +45,9 @@
 (setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
 
 ; for highlight
-(global-hl-line-mode)
+(global-hl-line-mode t)
+(custom-set-faces
+ '(hl-line ((t (:background "SteelBlue4")))))
 
 ; for number of character selected region
 (line-number-mode t)
