@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-#
 # Cookbook Name:: cookbooks-emacs
 # Recipe:: default
 #
@@ -17,7 +16,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
 home_dir = ENV['HOME']
 packages = %w[
