@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Cookbook Name:: cookbooks-emacs
 # Recipe:: default
@@ -17,33 +19,33 @@
 # limitations under the License.
 #
 
-home_dir = ENV["HOME"]
-packages = [
-  "gcc",
-  "make",
+home_dir = ENV['HOME']
+packages = %w[
+  gcc
+  make
 ]
-emacs_install_dir="/usr/local/bin"
+emacs_install_dir = '/usr/local/bin'
 
 # Install required packages
 case node[:platform]
-when "ubuntu"
-  packages.concat [
-    "libncurses5-dev",
-    "libxpm-dev",
-    "libjpeg8-dev",
-    "libgif-dev",
-    "libtiff5-dev",
+when 'ubuntu'
+  packages.concat %w[
+    libncurses5-dev
+    libxpm-dev
+    libjpeg8-dev
+    libgif-dev
+    libtiff5-dev
   ]
   case node[:platform_version].to_i
   when 18
-    packages.concat [
-      "libpng-dev",
-      "libgnutls28-dev"
+    packages.concat %w[
+      libpng-dev
+      libgnutls28-dev
     ]
   else
-    packages.concat [
-      "libpng12-dev",
-      "libgnutls-dev"
+    packages.concat %w[
+      libpng12-dev
+      libgnutls-dev
     ]
   end
   packages.each do |package|
@@ -51,15 +53,15 @@ when "ubuntu"
       action :install
     end
   end
-when "centos", "redhat", "amazon"
-  package.concat [
-    "ncurses-devel",
-    "libXpm-devel",
-    "libjpeg-devel",
-    "libpng-devel",
-    "libgif-devel",
-    "libtiff-devel",
-    "gnutls-devel"
+when 'centos', 'redhat', 'amazon'
+  package.concat %w[
+    ncurses-devel
+    libXpm-devel
+    libjpeg-devel
+    libpng-devel
+    libgif-devel
+    libtiff-devel
+    gnutls-devel
   ]
   yum_package package do
     action :install
@@ -68,36 +70,36 @@ end
 
 # Install emacs
 case node[:platform]
-when "ubuntu", "centos", "redhat", "amazon"
-  emacs_dir_name="emacs-#{node[:version]}"
-  emacs_file_name="#{emacs_dir_name}.tar.gz"
-  tmp_dir="/tmp"
+when 'ubuntu', 'centos', 'redhat', 'amazon'
+  emacs_dir_name = "emacs-#{node[:version]}"
+  emacs_file_name = "#{emacs_dir_name}.tar.gz"
+  tmp_dir = '/tmp'
 
   # Download a emacs tar.gz package
-  remote_file "emacs.tar.gz" do
+  remote_file 'emacs.tar.gz' do
     source "http://ftp.gnu.org/gnu/emacs/#{emacs_file_name}"
     path "#{tmp_dir}/#{emacs_file_name}"
-    mode "644"
+    mode '644'
     action :create
   end
 
   # Execute an install script
-  script "install emacs" do
-    not_if { File.exists?("#{emacs_install_dir}/emacs") }
-    interpreter "bash"
-    code <<-EOL
+  script 'install emacs' do
+    not_if { File.exist?("#{emacs_install_dir}/emacs") }
+    interpreter 'bash'
+    code <<-SHELL
       cd #{tmp_dir}
       tar zvxf #{emacs_file_name}
       cd #{tmp_dir}/#{emacs_dir_name}
       sh ./configure --with-x-toolkit=no
       make
       make install
-    EOL
+    SHELL
   end
-when "mac_os_x"
+when 'mac_os_x'
   # Install with Homebrew
-  homebrew_package "Install emacs with Homebrew" do
-    package_name "emacs"
+  homebrew_package 'Install emacs with Homebrew' do
+    package_name 'emacs'
     action :install
   end
 end
@@ -105,29 +107,29 @@ end
 # Touch default .emacs
 cookbook_file "#{home_dir}/.emacs" do
   backup 5
-  source "default_dot_emacs"
-  mode "644"
-  owner "#{node[:owner]}"
-  group "#{node[:group]}"
+  source 'default_dot_emacs'
+  mode '644'
+  owner node[:owner]
+  group node[:group]
   action :create
 end
 
 # Install specified elisp package used by package.el
-if !node[:package][:install].empty?
+unless node[:package][:install].empty?
   node[:package][:install].each do |pkg|
-    log "package_info" do
+    log 'package_info' do
       message pkg
       level :info
     end
-    bash "update packages" do
-      code <<-EOC
-        "#{emacs_install_dir}/"emacs -batch -l #{home_dir}/.emacs -q --eval "(progn (require (quote package)) (package-refresh-contents))"
-      EOC
+    bash 'update packages' do
+      code <<-EMACS_COMMAND
+        "#{emacs_install_dir}/'emacs -batch -l #{home_dir}/.emacs -q --eval '(progn (require (quote package)) (package-refresh-contents))"
+      EMACS_COMMAND
     end
-    bash "install package" do
-      code <<-EOC
-        "#{emacs_install_dir}/"emacs -batch -l #{home_dir}/.emacs --eval "(progn (require (quote package)) (package-list-packages) (package-install (quote #{pkg})))"
-      EOC
+    bash 'install package' do
+      code <<-EMACS_COMMAND
+        "#{emacs_install_dir}/'emacs -batch -l #{home_dir}/.emacs --eval '(progn (require (quote package)) (package-list-packages) (package-install (quote #{pkg})))"
+      EMACS_COMMAND
     end
   end
 end
@@ -137,23 +139,23 @@ if node[:dot_emacs][:write]
 
   cookbook_file "#{home_dir}/.emacs" do
     backup 5
-    source "dot_emacs"
-    owner "#{node[:owner]}"
-    group "#{node[:group]}"
-    mode "644"
+    source 'dot_emacs'
+    owner node[:owner]
+    group node[:group]
+    mode '644'
     action :create
   end
 
   emacs_needed_dir = [
-    ".emacs.d/backup",
-    ".emacs.d/site-lisp",
+    '.emacs.d/backup',
+    '.emacs.d/site-lisp'
   ]
 
-  emacs_needed_dir.each do |dir|
+  emacs_needed_dir.each do |_|
     directory "#{home_dir}/#{dir}" do
-      owner "#{node[:owner]}"
-      group "#{node[:group]}"
-      mode "775"
+      owner node[:owner]
+      group node[:group]
+      mode '775'
       action :create
       recursive true
     end
@@ -161,10 +163,10 @@ if node[:dot_emacs][:write]
 
   cookbook_file "#{home_dir}/.emacs.d/site-lisp/init.el" do
     backup 5
-    source "init.el"
-    owner "#{node[:owner]}"
-    group "#{node[:group]}"
-    mode "644"
+    source 'init.el'
+    owner node[:owner]
+    group node[:group]
+    mode '644'
     action :create
   end
 
@@ -174,28 +176,28 @@ end
 if node[:snippets][:put]
 
   snippets_needed_dir = [
-    ".emacs.d/snippets",
+    '.emacs.d/snippets'
   ]
 
-  snippets_needed_dir.each do |dir|
+  snippets_needed_dir.each do |_|
     directory "#{home_dir}/#{dir}" do
-      owner "#{node[:owner]}"
-      group "#{node[:group]}"
-      mode "775"
+      owner node[:owner]
+      group node[:group]
+      mode '775'
       action :create
       recursive true
     end
   end
 
-  ['ruby', 'python'].each do |lang|
+  %w[ruby python].each do |lang|
     remote_directory "#{home_dir}/.emacs.d/snippets/#{lang}-mode" do
       source "snippets/#{lang}-mode"
-      files_owner "#{node[:owner]}"
-      files_group "#{node[:group]}"
-      files_mode "644"
-      owner "#{node[:owner]}"
-      group "#{node[:group]}"
-      mode "775"
+      files_owner node[:owner]
+      files_group node[:group]
+      files_mode '644'
+      owner node[:owner]
+      group node[:group]
+      mode '775'
       action :create
       recursive true
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 default[:version] = ENV['VERSION'] || '28.2'
 default[:owner] = ENV['OWNER'] || 'vagrant'
 default[:group] = ENV['GROUP'] || 'vagrant'
@@ -5,30 +7,30 @@ default[:dot_emacs][:write] = true
 default[:snippets][:put] = true
 default[:package][:install] = [
   ### for omni completion
-  "helm",
-  "company",
-  # "auto-complete",
+  'helm',
+  'company',
+  # 'auto-complete',
   ### for snippet
-  "yasnippet",
+  'yasnippet',
   ### for ruby
-  "ruby-mode",
-  "rbenv",
-  "robe",
-  "inf-ruby",
-  "flymake-ruby",
+  'ruby-mode',
+  'rbenv',
+  'robe',
+  'inf-ruby',
+  'flymake-ruby',
   ### for python
-  "lsp-pyright",
-  "pipenv",
+  'lsp-pyright',
+  'pipenv',
   ### for lsp
-  "helm-lsp",
-  "lsp-mode",
-  # "eglot",
+  'helm-lsp',
+  'lsp-mode',
+  # 'eglot',
   ### for side pain
-  "treemacs",
-  "projectile",
+  'treemacs',
+  'projectile',
   ### for vue
-  "mmm-mode",
-  "web-mode",
+  'mmm-mode',
+  'web-mode',
   ### for utils
-  "leaf",
+  'leaf'
 ]
