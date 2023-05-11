@@ -33,6 +33,16 @@
 (eval-after-load 'company
   '(push 'company-robe company-backends))
 
+(defun restart-pry-buffer ()
+  "Restart the Pry buffer by killing it and starting robe again."
+  (interactive)
+  (let ((pry-buffer (get-buffer "*pry*"))
+        (kill-buffer-query-functions nil)
+        (kill-buffer-hook nil))
+    (when pry-buffer
+      (kill-buffer pry-buffer)))
+  (robe-start))
+
 ; for python lsp with lsp-pyright (needs to install pyright globally via pip command)
 ; (add-hook 'python-mode-hook #'lsp)
 (add-hook
