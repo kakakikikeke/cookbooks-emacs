@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ignore-too-many-length
+# key: ignore-too-many-length
+# --
+# rubocop:disable Metrics/MethodLength
