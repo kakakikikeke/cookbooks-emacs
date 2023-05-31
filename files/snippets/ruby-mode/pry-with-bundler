@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: pry-with-bundler
+# key: pry-with-bundler
+# --
+require 'bundler'
+Bundler.require
+['lib'].each { |dir| Dir["#{__dir__}/../../../../#{dir}/*.rb"].each {|file| require file } }
