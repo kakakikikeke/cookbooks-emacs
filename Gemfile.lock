@@ -19,6 +19,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.7-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.16.7-x86_64-linux)
+      racc (~> 1.4)
     parallel (1.25.1)
     parser (3.3.4.0)
       ast (~> 2.4.1)
@@ -35,7 +37,7 @@ GEM
     regexp_parser (2.9.2)
     reverse_markdown (2.1.1)
       nokogiri
-    rexml (3.3.4)
+    rexml (3.3.6)
       strscan
     rubocop (1.65.1)
       json (~> 2.3)
@@ -76,6 +78,7 @@ GEM
 PLATFORMS
   arm64-darwin-22
   x86_64-darwin-20
+  x86_64-linux
 
 DEPENDENCIES
   pry
