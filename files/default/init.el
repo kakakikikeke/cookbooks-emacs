@@ -63,6 +63,28 @@
 (add-hook 'emacs-lisp-mode-hook 'company-mode)
 (add-hook 'lisp-mode-hook 'company-mode)
 
+; for copilot (with straight)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+  :ensure t)
+(add-hook 'python-mode-hook 'copilot-mode)
+
 ; for helm (install 'helm' form package.el)
 ; (require 'helm-config) Cannot open load file, No such file or directory, helm-config
 (require 'helm)

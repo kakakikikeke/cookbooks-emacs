@@ -34,6 +34,7 @@
 (global-set-key "\C-c\C-tu" 'flymake-show-diagnostics-buffer)
 (global-set-key "\C-c\C-tc" 'treemacs-collapse-all-projects)
 (global-set-key "\C-c\C-tg" 'helm-grep-do-git-grep)
+(global-set-key "\C-c\C-ta" 'copilot-accept-completion)
 (global-set-key (kbd "ESC <down>") 'treemacs-move-project-down)
 (global-set-key (kbd "ESC <up>") 'treemacs-move-project-up)
 
