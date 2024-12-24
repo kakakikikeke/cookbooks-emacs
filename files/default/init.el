@@ -63,6 +63,12 @@
 (add-hook 'emacs-lisp-mode-hook 'company-mode)
 (add-hook 'lisp-mode-hook 'company-mode)
 
+; for lua
+(add-hook 'lua-mode-hook
+  (lambda ()
+    (company-mode 1)
+    (abbrev-mode 1)))
+
 ; for copilot (with straight)
 (defvar bootstrap-version)
 (let ((bootstrap-file
