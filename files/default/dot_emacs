@@ -115,4 +115,7 @@
         (downcase (buffer-name a))
         (downcase (buffer-name b)))))))
 (global-set-key "\C-c\C-o" 'sort-buffers)
+
+; Use only one buffer at startup even if multiple files are open
+(add-hook 'window-setup-hook 'delete-other-windows)
 ;;; .emacs ends here
