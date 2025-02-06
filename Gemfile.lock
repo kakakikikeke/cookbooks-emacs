@@ -22,7 +22,7 @@ GEM
     observer (0.1.2)
     ostruct (0.6.1)
     parallel (1.26.3)
-    parser (3.3.7.0)
+    parser (3.3.7.1)
       ast (~> 2.4.1)
       racc
     pry (0.15.2)
@@ -39,7 +39,7 @@ GEM
     reverse_markdown (3.0.0)
       nokogiri
     rexml (3.4.0)
-    rubocop (1.71.1)
+    rubocop (1.71.2)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
@@ -52,7 +52,7 @@ GEM
     rubocop-ast (1.38.0)
       parser (>= 3.3.1.0)
     ruby-progressbar (1.13.0)
-    solargraph (0.51.1)
+    solargraph (0.51.2)
       backport (~> 1.2)
       benchmark
       bundler (~> 2.0)
