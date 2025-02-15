@@ -2,7 +2,8 @@
 Install emacs by chef cookbooks into MacOS.
 
 ## Supported Platform
-* MacOS over 10.15.5
+* MacOS over 15.3
+* chef-solo 18.6.2
 
 ## Install
 * Install chef-solo command
@@ -18,7 +19,7 @@ chef-solo -v
 mkdir -p ~/chef-repo/cookbooks
 mkdir -p /tmp/chef-solo/
 cd ~/chef-repo/cookbooks
-git clone git://github.com/kakakikikeke/cookbooks-emacs.git
+git clone https://github.com/kakakikikeke/cookbooks-emacs.git
 ```
 
 Change the username and group in attributes/default.rb
@@ -43,7 +44,7 @@ EOF
 * Execute chef-solo
 
 ```
-chef-solo -c ~/chef-repo/client.rb -j cookbooks-emacs.json
+chef-solo -l info -c ~/chef-repo/client.rb -j cookbooks-emacs.json
 ```
 
 After installed, you can use emacs.

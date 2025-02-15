@@ -95,10 +95,16 @@ when 'ubuntu', 'centos', 'redhat', 'amazon'
     SHELL
   end
 when 'mac_os_x'
+  emacs_install_dir = '/opt/homebrew/bin'
+
+  execute 'update homebrew' do
+    command 'brew update'
+  end
+
   # Install with Homebrew
-  homebrew_package 'Install emacs with Homebrew' do
-    package_name 'emacs'
-    action :install
+  execute 'install emacs via homebrew' do
+    command "#{emacs_install_dir}/brew install emacs"
+    not_if "#{emacs_install_dir}/brew list emacs"
   end
 end
 
@@ -114,19 +120,20 @@ end
 
 # Install specified elisp package used by package.el
 unless node[:package][:install].empty?
+  bash 'update packages' do
+    code <<-EMACS_COMMAND
+      #{emacs_install_dir}/emacs -batch -l #{home_dir}/.emacs -q --eval '(progn (require (quote package)) (package-refresh-contents))'
+    EMACS_COMMAND
+  end
+
   node[:package][:install].each do |pkg|
     log 'package_info' do
-      message pkg
+      message "Installing an emacs pacakge of #{pkg}"
       level :info
-    end
-    bash 'update packages' do
-      code <<-EMACS_COMMAND
-        "#{emacs_install_dir}/'emacs -batch -l #{home_dir}/.emacs -q --eval '(progn (require (quote package)) (package-refresh-contents))"
-      EMACS_COMMAND
     end
     bash 'install package' do
       code <<-EMACS_COMMAND
-        "#{emacs_install_dir}/'emacs -batch -l #{home_dir}/.emacs --eval '(progn (require (quote package)) (package-list-packages) (package-install (quote #{pkg})))"
+        #{emacs_install_dir}/emacs -batch -l #{home_dir}/.emacs -q --eval '(progn (require (quote package)) (package-list-packages) (package-install (quote #{pkg})))'
       EMACS_COMMAND
     end
   end
@@ -149,7 +156,7 @@ if node[:dot_emacs][:write]
     '.emacs.d/site-lisp'
   ]
 
-  emacs_needed_dir.each do |_|
+  emacs_needed_dir.each do |dir|
     directory "#{home_dir}/#{dir}" do
       owner node[:owner]
       group node[:group]
@@ -177,7 +184,7 @@ if node[:snippets][:put]
     '.emacs.d/snippets'
   ]
 
-  snippets_needed_dir.each do |_|
+  snippets_needed_dir.each do |dir|
     directory "#{home_dir}/#{dir}" do
       owner node[:owner]
       group node[:group]
