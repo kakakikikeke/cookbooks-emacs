@@ -44,7 +44,7 @@ EOF
 * Execute chef-solo
 
 ```
-chef-solo -l info -c ~/chef-repo/client.rb -j cookbooks-emacs.json
+OWNER=kakakikikeke GROUP=staff chef-solo -l info -c ~/chef-repo/client.rb -j cookbooks-emacs.json
 ```
 
 After installed, you can use emacs.
