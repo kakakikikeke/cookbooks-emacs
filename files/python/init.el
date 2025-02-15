@@ -10,7 +10,7 @@
   :after python
   :defvar lsp-pyright-venv-path
   :init
-  (setq lsp-pyright-venv-path "/Users/kakakikikeke/.local/share/virtualenvs/app-xxx")
+  (setq lsp-pyright-venv-path "/Users/kakakikikeke/.local/share/virtualenvs/python-try-aR_k1rUJ")
   :hook
   (python-mode-hook . lsp))
 
