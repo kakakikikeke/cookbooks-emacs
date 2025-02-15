@@ -23,6 +23,7 @@ packages = %w[
   make
 ]
 emacs_install_dir = '/usr/local/bin'
+emacs_site_lisp_dir = '.emacs.d/site-lisp'
 
 # Install required packages
 case node[:platform]
@@ -153,7 +154,20 @@ if node[:dot_emacs][:write]
 
   emacs_needed_dir = [
     '.emacs.d/backup',
-    '.emacs.d/site-lisp'
+    emacs_site_lisp_dir,
+    "#{emacs_site_lisp_dir}/common_clipboard",
+    "#{emacs_site_lisp_dir}/common_func",
+    "#{emacs_site_lisp_dir}/common_keybind",
+    "#{emacs_site_lisp_dir}/common_ui",
+    "#{emacs_site_lisp_dir}/do_not_use",
+    "#{emacs_site_lisp_dir}/helm",
+    "#{emacs_site_lisp_dir}/java",
+    "#{emacs_site_lisp_dir}/lisp",
+    "#{emacs_site_lisp_dir}/lua",
+    "#{emacs_site_lisp_dir}/package",
+    "#{emacs_site_lisp_dir}/python",
+    "#{emacs_site_lisp_dir}/ruby",
+    "#{emacs_site_lisp_dir}/tool"
   ]
 
   emacs_needed_dir.each do |dir|
@@ -164,15 +178,18 @@ if node[:dot_emacs][:write]
       action :create
       recursive true
     end
-  end
 
-  cookbook_file "#{home_dir}/.emacs.d/site-lisp/init.el" do
-    backup 5
-    source 'init.el'
-    owner node[:owner]
-    group node[:group]
-    mode '644'
-    action :create
+    next if emacs_needed_dir.first(2).any? { |d| dir == d }
+
+    cookbook_file_dir = dir.gsub(emacs_site_lisp_dir, '')
+    cookbook_file "#{home_dir}/#{dir}/init.el" do
+      backup 5
+      source "#{cookbook_file_dir}/init.el"
+      owner node[:owner]
+      group node[:group]
+      mode '644'
+      action :create
+    end
   end
 
 end
