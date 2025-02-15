@@ -32,5 +32,7 @@ default[:package][:install] = [
   'mmm-mode',
   'web-mode',
   ### for utils
-  'leaf'
+  'leaf',
+  ### for java
+  'lsp-java'
 ]
