@@ -7,8 +7,6 @@ Install emacs by chef cookbooks.
 * [MacOS](README_mac.md)
 
 ## Install
-How to run vagrant user on Ubuntu24.04.
-
 * Install chef-solo command
 
 ```
