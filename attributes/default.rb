@@ -5,6 +5,9 @@ default[:owner] = ENV['OWNER'] || 'vagrant'
 default[:group] = ENV['GROUP'] || 'vagrant'
 default[:dot_emacs][:write] = true
 default[:snippets][:put] = true
+default[:emacs_install_dir] = ENV['EMACS_INSTALL_DIR'] || '/usr/local/bin'
+default[:emacs_site_lisp_dir] = '.emacs.d/site-lisp'
+default[:home_dir] = ENV['HOME']
 default[:package][:install] = [
   ### for omni completion
   'helm',
