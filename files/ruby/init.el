@@ -3,7 +3,7 @@
 
 ; for ruby lsp with lsp-mode (needs to install solargraph globally via gem command)
 (require 'lsp-mode)
-; (setq lsp-solargraph-use-bundler t)
+(setq lsp-solargraph-use-bundler t)
 (add-hook 'ruby-mode-hook 'lsp)
 
 ; for ruby lsp with eglot
