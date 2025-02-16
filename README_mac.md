@@ -2,7 +2,7 @@
 Install emacs by chef cookbooks into MacOS.
 
 ## Supported Platform
-* MacOS over 15.3
+* MacOS 15.3
 * chef-solo 18.6.2
 
 ## Install

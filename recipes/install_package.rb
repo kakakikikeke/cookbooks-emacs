@@ -16,10 +16,11 @@ when 'ubuntu'
     libtiff5-dev
   ]
   case node[:platform_version].to_i
-  when 18
+  when 18, 24
     packages.concat %w[
       libpng-dev
       libgnutls28-dev
+      texinfo
     ]
   else
     packages.concat %w[

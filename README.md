@@ -2,13 +2,12 @@
 Install emacs by chef cookbooks.
 
 ## Supported Platform
-
-* CentOS
-* Ubuntu
+* Ubuntu 24.04
+* chef-solo 18.6.2
 * [MacOS](README_mac.md)
 
 ## Install
-How to run vagrant user on Ubuntu16.04.
+How to run vagrant user on Ubuntu24.04.
 
 * Install chef-solo command
 
@@ -20,12 +19,11 @@ chef-solo -v
 * Deploy cookbooks
 
 ```
-sudo yum -y install git
 mkdir -p ~/chef-repo/cookbooks
 mkdir -p ~/chef-repo/roles
 mkdir -p /tmp/chef-solo/
 cd ~/chef-repo/cookbooks
-git clone git://github.com/kakakikikeke/cookbooks-emacs.git
+git clone https://github.com/kakakikikeke/cookbooks-emacs.git
 ```
 
 ```
@@ -50,11 +48,17 @@ EOF
 * Execute chef-solo
 
 ```
-sudo chef-solo -c ~/chef-repo/client.rb -j ~/chef-repo/cookbooks/cookbooks-emacs.json
+OWNER=kakakikikeke GROUP=kakakikikeke sudo -E chef-solo -l info -L /tmp/cookbooks-emacs.log -c ~/chef-repo/client.rb -j cookbooks-emacs.json
 ```
 
 After installed, you can use emacs.
 
 ```
 /usr/local/bin/emacs
+```
+
+If an error occurs, please change the permissions of .emacs.d.
+
+```
+sudo chown -R kakakikikeke:kakakikikeke ~/.emacs.d
 ```
