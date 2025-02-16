@@ -52,3 +52,8 @@ After installed, you can use emacs.
 ```
 /usr/local/bin/emacs
 ```
+
+## Build
+* bundle config path vendor
+* bundle install
+* bundle exec rubocup .
