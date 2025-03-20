@@ -8,7 +8,9 @@
 ; load each init scripts
 (defun load-config (name)
   "Load config file from ~/.emacs.d/site-lisp/NAME/init.el"
-  (let ((path (expand-file-name (concat "site-lisp/" name "/init.el") user-emacs-directory)))
+  (let ((path
+         (expand-file-name (concat "site-lisp/" name "/init.el")
+                           user-emacs-directory)))
     (when (file-exists-p path)
       (load-file path))))
 (load-config "package")

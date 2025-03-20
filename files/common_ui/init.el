@@ -8,8 +8,7 @@
 
 ; for highlight
 (global-hl-line-mode t)
-(custom-set-faces
- '(hl-line ((t (:background "SteelBlue4")))))
+(custom-set-faces '(hl-line ((t (:background "SteelBlue4")))))
 
 ; for number of character selected region
 (line-number-mode t)
@@ -17,8 +16,8 @@
 (defun count-lines-and-chars ()
   (if mark-active
       (format "[%3d:%4d]"
-	      (count-lines (region-beginning) (region-end))
-	      (- (region-end) (region-beginning)))
+              (count-lines (region-beginning) (region-end))
+              (- (region-end) (region-beginning)))
     ""))
 ; (add-to-list 'default-mode-line-format '(:eval (count-lines-and-chars)))
 

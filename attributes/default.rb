@@ -37,5 +37,7 @@ default[:package][:install] = [
   ### for utils
   'leaf',
   ### for java
-  'lsp-java'
+  'lsp-java',
+  ### for lsp
+  'elisp-autofmt'
 ]

@@ -14,8 +14,7 @@
 (require 'flymake-ruby)
 (add-hook 'ruby-mode-hook 'flymake-ruby-load)
 (add-hook 'ruby-mode-hook 'robe-mode)
-(eval-after-load 'company
-  '(push 'company-robe company-backends))
+(eval-after-load 'company '(push 'company-robe company-backends))
 
 (defun restart-pry-buffer ()
   "Restart the Pry buffer by killing it and starting robe again."
