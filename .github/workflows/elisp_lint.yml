@@ -1,21 +1,32 @@
-name: Emacs Lisp CI
+name: Emacs Lisp Format Check
 
 on:
   push:
   pull_request:
 
 jobs:
-  elisp-check:
+  format-check:
     runs-on: ubuntu-latest
+
     steps:
-      - name: チェックアウト
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: `elisp-autofmt-cmd.py` を取得
-        run: wget -O elisp-autofmt-cmd.py https://codeberg.org/ideasman42/emacs-elisp-autofmt/raw/branch/main/elisp-autofmt-cmd.py && chmod +x elisp-autofmt-cmd.py
+      - name: Install Emacs
+        run: sudo apt-get install -y emacs-nox
 
-      - name: Emacs Lisp フォーマットチェック
+      - name: Install pyenv
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.9"
+
+      - name: Install elisp-autofmt into emacs
         run: |
-          ./elisp-autofmt-cmd.py files/python/init.el
-          git diff --exit-code files/python/init.el
+          mkdir -p ~/.emacs.d/elpa/elisp-autofmt-latest/
+          wget -O ~/.emacs.d/elpa/elisp-autofmt-latest/elisp-autofmt.el https://codeberg.org/ideasman42/emacs-elisp-autofmt/raw/branch/main/elisp-autofmt.el
 
+      - name: Run format_elisp_files.sh
+        run: sh ./format_elisp_files.sh
+
+      - name: Check diff
+        run: git diff --exit-code
