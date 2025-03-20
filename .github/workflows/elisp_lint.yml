@@ -1,0 +1,21 @@
+name: Emacs Lisp CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  elisp-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: チェックアウト
+        uses: actions/checkout@v4
+
+      - name: `elisp-autofmt-cmd.py` を取得
+        run: wget -O elisp-autofmt-cmd.py https://codeberg.org/ideasman42/emacs-elisp-autofmt/raw/branch/main/elisp-autofmt-cmd.py && chmod +x elisp-autofmt-cmd.py
+
+      - name: Emacs Lisp フォーマットチェック
+        run: |
+          ./elisp-autofmt-cmd.py files/python/init.el
+          git diff --exit-code files/python/init.el
+
