@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-default[:version] = ENV['VERSION'] || '29.4'
+default[:version] = ENV['VERSION'] || '30.1'
 default[:owner] = ENV['OWNER'] || 'vagrant'
 default[:group] = ENV['GROUP'] || 'vagrant'
 default[:dot_emacs][:write] = true
