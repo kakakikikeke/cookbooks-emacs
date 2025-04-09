@@ -55,8 +55,12 @@ After installed, you can use emacs.
 /usr/local/bin/emacs
 ```
 
+## Troubleshooting
+
 If an error occurs, please change the permissions of .emacs.d.
 
 ```
 sudo chown -R kakakikikeke:kakakikikeke ~/.emacs.d
 ```
+
+If you already have a file in /usr/local/bin/emacs, delete it before running this, otherwise the latest version will not be installed.
