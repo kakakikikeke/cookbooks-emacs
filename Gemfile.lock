@@ -20,6 +20,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.18.8-x86_64-linux-gnu)
+      racc (~> 1.4)
     observer (0.1.2)
     ostruct (0.6.1)
     parallel (1.27.0)
@@ -89,6 +91,7 @@ PLATFORMS
   arm64-darwin-23
   arm64-darwin-24
   x86_64-darwin-20
+  x86_64-linux
 
 DEPENDENCIES
   pry
