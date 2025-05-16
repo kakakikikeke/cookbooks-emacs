@@ -20,7 +20,7 @@
 (global-set-key "\C-c\C-p" 'treemacs)
 (global-set-key "\C-cp" 'treemacs)
 (global-set-key "\C-c\C-tf" 'projectile-find-file)
-(global-set-key "\C-c\C-tu" 'flymake-show-diagnostics-buffer)
+(global-set-key "\C-c\C-tu" 'flymake-show-buffer-diagnostics)
 (global-set-key "\C-c\C-tc" 'treemacs-collapse-all-projects)
 (global-set-key "\C-c\C-tg" 'helm-grep-do-git-grep)
 (global-unset-key "\M-;")
