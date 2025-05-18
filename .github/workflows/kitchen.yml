@@ -26,3 +26,5 @@ jobs:
       - name: Run Test Kitchen
         run: |
           bundle exec kitchen test
+        env:
+          CHEF_LICENSE: accept
