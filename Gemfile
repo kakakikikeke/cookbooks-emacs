@@ -2,6 +2,11 @@
 
 source 'https://rubygems.org'
 
-gem 'pry'
-gem 'pry-doc'
-gem 'solargraph'
+group :development do
+  gem 'csv'
+  gem 'kitchen-docker'
+  gem 'pry'
+  gem 'pry-doc'
+  gem 'solargraph'
+  gem 'test-kitchen'
+end
