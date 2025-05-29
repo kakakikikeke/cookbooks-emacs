@@ -4,7 +4,7 @@
 case node[:platform]
 when 'ubuntu', 'centos', 'redhat', 'amazon'
   emacs_dir_name = "emacs-#{node[:version]}"
-  emacs_file_name = "#{emacs_dir_name}.tar.gz"
+  emacs_file_name = "#{emacs_dir_name}.tar.xz"
   tmp_dir = '/tmp'
 
   # Download a emacs tar.xz package
