@@ -59,6 +59,6 @@ After installed, you can use emacs.
 * bundle exec rubocup .
 
 ## Test
-* DOCKER_DEFAULT_PLATFORM=linux/amd64 CHEF_LICENSE=accept bundle exec kitchen test
+* DOCKER_DEFAULT_PLATFORM=linux/arm64 CHEF_LICENSE=accept bundle exec kitchen test
 * docker tag xxx kakakikikeke/ubuntu22-for-kitchen-docker
 * docker push kakakikikeke/ubuntu22-for-kitchen-docker
