@@ -9,7 +9,7 @@ when 'ubuntu', 'centos', 'redhat', 'amazon'
 
   # Download a emacs tar.gz package
   remote_file 'emacs.tar.gz' do
-    source "http://ftp.gnu.org/gnu/emacs/#{emacs_file_name}"
+    source "https://ftp.jaist.ac.jp/pub/GNU/emacs/#{emacs_file_name}"
     path "#{tmp_dir}/#{emacs_file_name}"
     mode '644'
     action :create
