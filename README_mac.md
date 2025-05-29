@@ -57,3 +57,6 @@ After installed, you can use emacs.
 * bundle config path vendor
 * bundle install
 * bundle exec rubocup .
+
+## Test
+* CHEF_LICENSE=accept bundle exec kitchen test
