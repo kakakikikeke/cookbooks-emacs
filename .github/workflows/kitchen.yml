@@ -9,6 +9,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: linux/amd64
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -19,9 +24,6 @@ jobs:
 
       - name: Install dependencies
         run: bundle install
-
-      - name: Set up Docker
-        uses: docker/setup-docker-action@v4
 
       - name: Run Test Kitchen
         run: |
