@@ -7,8 +7,8 @@ when 'ubuntu', 'centos', 'redhat', 'amazon'
   emacs_file_name = "#{emacs_dir_name}.tar.gz"
   tmp_dir = '/tmp'
 
-  # Download a emacs tar.gz package
-  remote_file 'emacs.tar.gz' do
+  # Download a emacs tar.xz package
+  remote_file 'emacs.tar.xz' do
     source "https://ftp.jaist.ac.jp/pub/GNU/emacs/#{emacs_file_name}"
     path "#{tmp_dir}/#{emacs_file_name}"
     mode '644'
