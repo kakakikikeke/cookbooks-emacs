@@ -110,7 +110,7 @@ GEM
     rubyntlm (0.6.5)
       base64
     rubyzip (2.4.1)
-    solargraph (0.55.2)
+    solargraph (0.55.4)
       backport (~> 1.2)
       benchmark (~> 0.4)
       bundler (~> 2.0)
