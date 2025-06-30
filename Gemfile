@@ -3,7 +3,6 @@
 source 'https://rubygems.org'
 
 group :development do
-  gem 'csv'
   gem 'kitchen-docker'
   gem 'pry'
   gem 'pry-doc'
