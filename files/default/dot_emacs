@@ -19,6 +19,7 @@
 (load-config "java")
 (load-config "lisp")
 (load-config "lua")
+(load-config "css")
 (load-config "helm")
 (load-config "tool")
 (load-config "common_func")

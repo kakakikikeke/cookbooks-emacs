@@ -24,6 +24,7 @@ if node[:dot_emacs][:write]
     "#{node[:emacs_site_lisp_dir]}/java",
     "#{node[:emacs_site_lisp_dir]}/lisp",
     "#{node[:emacs_site_lisp_dir]}/lua",
+    "#{node[:emacs_site_lisp_dir]}/css",
     "#{node[:emacs_site_lisp_dir]}/package",
     "#{node[:emacs_site_lisp_dir]}/python",
     "#{node[:emacs_site_lisp_dir]}/ruby",
