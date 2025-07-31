@@ -26,7 +26,7 @@ GEM
     httpclient (2.9.0)
       mutex_m
     jaro_winkler (1.6.1)
-    json (2.13.1)
+    json (2.13.2)
     kitchen-docker (3.0.0)
       test-kitchen (>= 1.0.0)
     kramdown (2.5.1)
