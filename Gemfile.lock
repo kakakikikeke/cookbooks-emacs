@@ -87,7 +87,7 @@ GEM
     rainbow (3.1.1)
     rbs (3.9.4)
       logger
-    regexp_parser (2.11.0)
+    regexp_parser (2.11.2)
     reverse_markdown (3.0.0)
       nokogiri
     rexml (3.4.1)
