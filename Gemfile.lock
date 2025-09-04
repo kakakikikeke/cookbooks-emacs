@@ -6,7 +6,7 @@ GEM
     base64 (0.3.0)
     bcrypt_pbkdf (1.1.1)
     benchmark (0.4.1)
-    bigdecimal (3.2.2)
+    bigdecimal (3.2.3)
     builder (3.3.0)
     chef-utils (18.8.11)
       concurrent-ruby
@@ -91,7 +91,7 @@ GEM
     reverse_markdown (3.0.0)
       nokogiri
     rexml (3.4.2)
-    rubocop (1.80.1)
+    rubocop (1.80.2)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
