@@ -101,9 +101,10 @@ GEM
     rainbow (3.1.1)
     rbs (3.9.5)
       logger
-    rdoc (6.14.2)
+    rdoc (6.15.0)
       erb
       psych (>= 4.0.0)
+      tsort
     regexp_parser (2.11.3)
     reline (0.6.2)
       io-console (~> 0.5)
@@ -178,6 +179,7 @@ GEM
     thor (1.4.0)
     tilt (2.6.1)
     tomlrb (2.0.3)
+    tsort (0.2.0)
     tty-box (0.7.0)
       pastel (~> 0.8)
       strings (~> 0.2.0)
