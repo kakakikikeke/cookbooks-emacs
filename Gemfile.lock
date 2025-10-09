@@ -6,7 +6,7 @@ GEM
     base64 (0.3.0)
     bcrypt_pbkdf (1.1.1)
     benchmark (0.4.1)
-    bigdecimal (3.3.0)
+    bigdecimal (3.3.1)
     builder (3.3.0)
     chef-utils (18.8.11)
       concurrent-ruby
@@ -87,7 +87,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.5.1)
+    prism (1.5.2)
     pry (0.15.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
