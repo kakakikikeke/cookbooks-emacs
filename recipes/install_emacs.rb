@@ -21,7 +21,7 @@ when 'ubuntu', 'centos', 'redhat', 'amazon'
     interpreter 'bash'
     code <<-SHELL
       cd #{tmp_dir}
-      tar zvxf #{emacs_file_name}
+      tar xvfJ #{emacs_file_name}
       cd #{tmp_dir}/#{emacs_dir_name}
       sh ./configure --with-x-toolkit=no
       make
