@@ -5,7 +5,7 @@ GEM
     backport (1.2.0)
     base64 (0.3.0)
     bcrypt_pbkdf (1.1.1)
-    benchmark (0.4.1)
+    benchmark (0.5.0)
     bigdecimal (3.3.1)
     builder (3.3.0)
     chef-utils (18.8.46)
@@ -111,7 +111,7 @@ GEM
     reverse_markdown (3.0.0)
       nokogiri
     rexml (3.4.4)
-    rubocop (1.81.1)
+    rubocop (1.81.6)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
