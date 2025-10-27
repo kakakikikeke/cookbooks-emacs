@@ -34,7 +34,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jaro_winkler (1.6.1)
-    json (2.15.1)
+    json (2.15.2)
     kitchen-docker (3.0.0)
       test-kitchen (>= 1.0.0)
     kramdown (2.5.1)
@@ -79,7 +79,7 @@ GEM
     observer (0.1.2)
     ostruct (0.6.3)
     parallel (1.27.0)
-    parser (3.3.9.0)
+    parser (3.3.10.0)
       ast (~> 2.4.1)
       racc
     pastel (0.8.0)
