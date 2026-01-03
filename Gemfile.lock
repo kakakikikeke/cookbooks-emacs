@@ -131,7 +131,7 @@ GEM
     rubyntlm (0.6.5)
       base64
     rubyzip (2.4.1)
-    solargraph (0.58.0)
+    solargraph (0.58.1)
       ast (~> 2.4.3)
       backport (~> 1.2)
       benchmark (~> 0.4)
