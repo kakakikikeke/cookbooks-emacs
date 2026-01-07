@@ -180,7 +180,7 @@ GEM
       winrm (~> 2.0)
       winrm-elevated (~> 1.0)
       winrm-fs (~> 1.1)
-    thor (1.4.0)
+    thor (1.5.0)
     tilt (2.6.1)
     tomlrb (2.0.4)
     tsort (0.2.0)
