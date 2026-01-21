@@ -58,7 +58,7 @@ GEM
       mixlib-shellout
       mixlib-versioning
       thor
-    mixlib-shellout (3.3.9)
+    mixlib-shellout (3.4.10)
       chef-utils
     mixlib-versioning (1.2.12)
     multi_json (1.19.1)
@@ -110,7 +110,7 @@ GEM
     regexp_parser (2.11.3)
     reline (0.6.3)
       io-console (~> 0.5)
-    reverse_markdown (3.0.1)
+    reverse_markdown (3.0.2)
       nokogiri
     rexml (3.4.4)
     rubocop (1.82.1)
