@@ -7,5 +7,5 @@ group :development do
   gem 'pry'
   gem 'pry-doc'
   gem 'solargraph'
-  gem 'test-kitchen'
+  gem 'test-kitchen', '3.9.1'
 end
