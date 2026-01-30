@@ -101,8 +101,9 @@ GEM
       stringio
     racc (1.8.1)
     rainbow (3.1.1)
-    rbs (3.10.2)
+    rbs (3.10.3)
       logger
+      tsort
     rdoc (7.1.0)
       erb
       psych (>= 4.0.0)
