@@ -30,3 +30,4 @@ jobs:
           bundle exec kitchen test
         env:
           CHEF_LICENSE: accept
+          DOCKER_BUILDKIT: 0
