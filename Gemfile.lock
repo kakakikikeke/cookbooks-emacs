@@ -55,7 +55,7 @@ GEM
       little-plugger (~> 1.1)
       multi_json (~> 1.14)
     method_source (1.1.0)
-    mixlib-install (3.15.0)
+    mixlib-install (3.16.0)
       mixlib-shellout
       mixlib-versioning
       thor
