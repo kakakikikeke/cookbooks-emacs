@@ -8,7 +8,7 @@ GEM
     benchmark (0.5.0)
     bigdecimal (4.1.2)
     builder (3.3.0)
-    chef-utils (19.2.12)
+    chef-utils (19.2.110)
       concurrent-ruby
     coderay (1.1.3)
     concurrent-ruby (1.3.6)
@@ -80,7 +80,7 @@ GEM
     observer (0.1.2)
     open3 (0.2.1)
     ostruct (0.6.3)
-    parallel (2.0.1)
+    parallel (2.1.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
