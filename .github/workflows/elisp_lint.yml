@@ -24,7 +24,7 @@ jobs:
       - name: Install elisp-autofmt into emacs
         run: |
           mkdir -p ~/.emacs.d/elpa/elisp-autofmt-latest/
-          wget -O ~/.emacs.d/elpa/elisp-autofmt-latest/elisp-autofmt.el https://codeberg.org/ideasman42/emacs-elisp-autofmt/raw/branch/main/elisp-autofmt.el
+          wget -O ~/.emacs.d/elpa/elisp-autofmt-latest/elisp-autofmt.el https://codeberg.org/ideasman42/emacs-elisp-autofmt/raw/commit/5ae24d82ee01a849554c4f0f3bfadb007f558693/elisp-autofmt.el
 
       - name: Run format_elisp_files.sh
         run: sh ./format_elisp_files.sh
