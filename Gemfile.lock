@@ -112,7 +112,7 @@ GEM
       stringio
     racc (1.8.1)
     rainbow (3.1.1)
-    rbs (4.1.3)
+    rbs (4.2.0)
       logger
       prism (>= 1.6.0)
       tsort
@@ -126,8 +126,8 @@ GEM
     reverse_markdown (3.0.2)
       nokogiri
     rexml (3.4.4)
-    rubocop (1.89.0)
-      json (~> 2.3)
+    rubocop (1.90.0)
+      json (>= 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
       parallel (>= 1.10)
@@ -144,7 +144,7 @@ GEM
     rubyntlm (0.6.5)
       base64
     rubyzip (2.4.1)
-    solargraph (0.60.3)
+    solargraph (0.60.4)
       ast (~> 2.4.3)
       backport (~> 1.2)
       benchmark (~> 0.4)
@@ -169,7 +169,7 @@ GEM
       yard (~> 0.9, >= 0.9.24)
       yard-activesupport-concern (~> 0.0)
       yard-solargraph (~> 0.1)
-    sorbet-runtime (0.6.13437)
+    sorbet-runtime (0.6.13471)
     sord (7.1.0)
       commander (~> 5.0)
       parlour (~> 9.1)
