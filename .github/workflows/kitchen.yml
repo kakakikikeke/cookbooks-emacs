@@ -9,16 +9,19 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        # actions/checkout@7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        # docker/setup-qemu-action@4.2.0
+        uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8
         with:
           platforms: linux/arm64
 
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        # ruby/setup-ruby v1.321.0
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
         with:
           bundler-cache: true
 
