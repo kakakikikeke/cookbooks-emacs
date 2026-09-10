@@ -20,4 +20,4 @@ jobs:
           scan-type: fs
           scan-ref: .
           scanners: vuln,secret,misconfig
-          skip-dirs: './vendor,.kitchen/,'
+          skip-dirs: './vendor,.kitchen/'
