@@ -1,22 +1,25 @@
 # cookbooks-emacs
+
 Install emacs by chef cookbooks.
 
 ## Supported Platform
+
 * Ubuntu 24.04
 * chef-solo 18.6.2
 * [MacOS](README_mac.md)
 
 ## Install
+
 * Install chef-solo command
 
-```
+```bash
 curl -L https://omnitruck.chef.io/install.sh | sudo bash
 chef-solo -v
 ```
 
 * Deploy cookbooks
 
-```
+```bash
 mkdir -p ~/chef-repo/cookbooks
 mkdir -p ~/chef-repo/roles
 mkdir -p /tmp/chef-solo/
@@ -24,7 +27,7 @@ cd ~/chef-repo/cookbooks
 git clone https://github.com/kakakikikeke/cookbooks-emacs.git
 ```
 
-```
+```bash
 cat << EOF > ~/chef-repo/cookbooks/cookbooks-emacs.json
 {
   "run_list": [
@@ -34,7 +37,7 @@ cat << EOF > ~/chef-repo/cookbooks/cookbooks-emacs.json
 EOF
 ```
 
-```
+```bash
 cat << EOF > ~/chef-repo/client.rb
   file_cache_path "/tmp/chef-solo"
   cookbook_path ["~/chef-repo/cookbooks"]
@@ -45,21 +48,29 @@ EOF
 
 * Execute chef-solo
 
-```
+```bash
 OWNER=kakakikikeke GROUP=kakakikikeke sudo -E chef-solo -l info -L /tmp/cookbooks-emacs.log -c ~/chef-repo/client.rb -j cookbooks-emacs.json
 ```
 
 After installed, you can use emacs.
 
-```
+```bash
 /usr/local/bin/emacs
+```
+
+## Test
+
+Run the Kitchen integration test.
+
+```bash
+bundle exec kitchen test
 ```
 
 ## Troubleshooting
 
 If an error occurs, please change the permissions of .emacs.d.
 
-```
+```bash
 sudo chown -R kakakikikeke:kakakikikeke ~/.emacs.d
 ```
 

@@ -3,10 +3,15 @@ driver:
   dns:
     - 8.8.8.8
     - 8.8.4.4
-  image: kakakikikeke/ubuntu22-for-kitchen-docker
+  image: ubuntu:22.04
+  volume:
+    - <%= Dir.pwd %>:/tmp/cookbooks/cookbooks-emacs:ro
 
 provisioner:
-  name: chef_zero
+  name: shell
+  root_path: /tmp/kitchen-run
+  data_path:
+  script: bootstrap.sh
 
 platforms:
   - name: ubuntu-22.04

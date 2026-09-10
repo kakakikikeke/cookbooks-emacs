@@ -1,0 +1,3 @@
+# Pulled by test-kitchen via chef-winrm-fs for Windows WinRM transport.
+# This cookbook's Kitchen suite uses Docker/Linux SSH, and chef-winrm-fs currently requires rubyzip 2.x.
+CVE-2026-85396
