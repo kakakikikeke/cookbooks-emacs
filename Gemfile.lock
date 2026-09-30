@@ -134,7 +134,7 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
-    regexp_parser (2.13.0)
+    regexp_parser (2.13.1)
     reline (0.7.0)
       io-console (~> 0.5)
     reverse_markdown (3.0.2)
@@ -183,7 +183,7 @@ GEM
       yard (~> 0.9, >= 0.9.24)
       yard-activesupport-concern (~> 0.0)
       yard-solargraph (~> 0.1)
-    sorbet-runtime (0.6.13506)
+    sorbet-runtime (0.6.13509)
     sord (7.1.0)
       commander (~> 5.0)
       parlour (~> 9.1)
