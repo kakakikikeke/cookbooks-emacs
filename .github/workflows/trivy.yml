@@ -21,4 +21,3 @@ jobs:
           scan-ref: .
           exit-code: 1
           scanners: vuln,secret,misconfig
-          skip-dirs: './vendor,./.kitchen,./.ruby-lsp'

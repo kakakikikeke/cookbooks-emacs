@@ -1,77 +1,40 @@
 # cookbooks-emacs
 
-Install emacs by chef cookbooks.
+Install and configure Emacs with Ansible.
 
-## Supported Platform
+## Supported platforms
 
-* Ubuntu 24.04
-* chef-solo 18.6.2
-* [MacOS](README_mac.md)
+* Ubuntu 22.04 and 24.04
+* macOS with Homebrew
 
-## Install
+Ansible Core 2.15 or later is required. Install it with your platform's package manager or Python environment manager.
 
-* Install chef-solo command
+## Run
 
-```bash
-curl -L https://omnitruck.chef.io/install.sh | sudo bash
-chef-solo -v
-```
-
-* Deploy cookbooks
+Clone this repository, then run the playbook from its directory:
 
 ```bash
-mkdir -p ~/chef-repo/cookbooks
-mkdir -p ~/chef-repo/roles
-mkdir -p /tmp/chef-solo/
-cd ~/chef-repo/cookbooks
-git clone https://github.com/kakakikikeke/cookbooks-emacs.git
+ansible-playbook -i localhost, -c local playbook.yml --ask-become-pass
 ```
+
+On Linux, Ansible uses privilege escalation to install build dependencies and Emacs under `/usr/local`. On macOS, Emacs is installed with Homebrew and no become password is needed; run without `--ask-become-pass`:
 
 ```bash
-cat << EOF > ~/chef-repo/cookbooks/cookbooks-emacs.json
-{
-  "run_list": [
-    "recipe[cookbooks-emacs]"
-  ]
-}
-EOF
+ansible-playbook -i localhost, -c local playbook.yml
 ```
+
+The playbook installs Emacs 30.1 by default, configured Emacs Lisp packages, the files under `files/`, and the Ruby and Python yasnippet snippets. Override defaults with extra variables or environment variables:
 
 ```bash
-cat << EOF > ~/chef-repo/client.rb
-  file_cache_path "/tmp/chef-solo"
-  cookbook_path ["~/chef-repo/cookbooks"]
-  role_path "~/chef-repo/roles"
-  log_level :debug
-EOF
+VERSION=30.1 ansible-playbook -i localhost, -c local playbook.yml -K
+ansible-playbook -i localhost, -c local playbook.yml -K \
+  -e 'emacs_version=30.1 emacs_packages=[] emacs_put_snippets=false'
 ```
 
-* Execute chef-solo
+Use `--check --diff` to preview supported changes.
+
+## Validate
 
 ```bash
-OWNER=kakakikikeke GROUP=kakakikikeke sudo -E chef-solo -l info -L /tmp/cookbooks-emacs.log -c ~/chef-repo/client.rb -j cookbooks-emacs.json
+ansible-playbook --syntax-check -i localhost, playbook.yml
 ```
-
-After installed, you can use emacs.
-
-```bash
-/usr/local/bin/emacs
-```
-
-## Test
-
-Run the Kitchen integration test.
-
-```bash
-bundle exec kitchen test
-```
-
-## Troubleshooting
-
-If an error occurs, please change the permissions of .emacs.d.
-
-```bash
-sudo chown -R kakakikikeke:kakakikikeke ~/.emacs.d
-```
-
-If you already have a file in /usr/local/bin/emacs, delete it before running this, otherwise the latest version will not be installed.

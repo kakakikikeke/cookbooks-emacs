@@ -1,0 +1,86 @@
+---
+emacs_version: "{{ lookup('env', 'VERSION') | default('30.1', true) }}"
+emacs_home: "{{ lookup('env', 'HOME') }}"
+emacs_owner: "{{ lookup('env', 'OWNER') | default(lookup('env', 'USER'), true) }}"
+emacs_group: "{{ lookup('env', 'GROUP') | default('staff' if ansible_system == 'Darwin' else ansible_user_gid | string, true) }}"
+emacs_install_dir: "{{ lookup('env', 'EMACS_INSTALL_DIR') | default('/opt/homebrew/bin' if ansible_system == 'Darwin' and ansible_architecture == 'arm64' else '/usr/local/bin', true) }}"
+emacs_binary: "{{ emacs_install_dir }}/emacs"
+emacs_prefix: "{{ emacs_install_dir | dirname }}"
+homebrew_bin: "{{ lookup('env', 'HOMEBREW_BIN') | default('/opt/homebrew/bin/brew' if ansible_architecture == 'arm64' else '/usr/local/bin/brew', true) }}"
+emacs_write_config: true
+emacs_put_snippets: true
+emacs_site_lisp_dir: .emacs.d/site-lisp
+emacs_packages:
+  - helm
+  - company
+  - yasnippet
+  - ruby-mode
+  - rbenv
+  - robe
+  - inf-ruby
+  - flymake-ruby
+  - lsp-pyright
+  - pipenv
+  - helm-lsp
+  - lsp-mode
+  - treemacs
+  - projectile
+  - mmm-mode
+  - web-mode
+  - leaf
+  - lsp-java
+  - elisp-autofmt
+emacs_build_dependencies:
+  Debian:
+    - gcc
+    - make
+    - libncurses-dev
+    - libxpm-dev
+    - libjpeg-dev
+    - libgif-dev
+    - libtiff-dev
+    - libpng-dev
+    - libgnutls28-dev
+    - texinfo
+  RedHat:
+    - gcc
+    - make
+    - ncurses-devel
+    - libXpm-devel
+    - libjpeg-devel
+    - libpng-devel
+    - libgif-devel
+    - libtiff-devel
+    - gnutls-devel
+emacs_directories:
+  - .emacs.d/backup
+  - .emacs.d/site-lisp
+  - .emacs.d/site-lisp/common_clipboard
+  - .emacs.d/site-lisp/common_func
+  - .emacs.d/site-lisp/common_keybind
+  - .emacs.d/site-lisp/common_ui
+  - .emacs.d/site-lisp/do_not_use
+  - .emacs.d/site-lisp/helm
+  - .emacs.d/site-lisp/java
+  - .emacs.d/site-lisp/lisp
+  - .emacs.d/site-lisp/lua
+  - .emacs.d/site-lisp/css
+  - .emacs.d/site-lisp/package
+  - .emacs.d/site-lisp/python
+  - .emacs.d/site-lisp/ruby
+  - .emacs.d/site-lisp/tool
+emacs_site_lisp_configs:
+  - common_clipboard
+  - common_func
+  - common_keybind
+  - common_ui
+  - do_not_use
+  - helm
+  - java
+  - lisp
+  - lua
+  - css
+  - package
+  - python
+  - ruby
+  - tool

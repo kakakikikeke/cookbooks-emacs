@@ -1,6 +1,0 @@
-.bundle/
-.git/
-.github/
-.kitchen/
-.ruby-lsp/
-vendor/

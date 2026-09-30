@@ -1,0 +1,151 @@
+---
+- name: Install and configure Emacs
+  hosts: localhost
+  connection: local
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Install Emacs with Homebrew
+      when: ansible_system == 'Darwin'
+      block:
+        - name: Update Homebrew metadata
+          ansible.builtin.command: "{{ homebrew_bin }} update"
+          changed_when: false
+          when: not ansible_check_mode
+
+        - name: Check whether Emacs is installed
+          ansible.builtin.command: "{{ homebrew_bin }} list emacs"
+          register: emacs_homebrew_check
+          changed_when: false
+          failed_when: false
+          check_mode: false
+
+        - name: Install Emacs
+          ansible.builtin.command: "{{ homebrew_bin }} install emacs"
+          when: emacs_homebrew_check.rc != 0
+
+    - name: Install Emacs build dependencies
+      ansible.builtin.package:
+        name: "{{ emacs_build_dependencies[ansible_os_family] }}"
+        state: present
+      become: true
+      when: ansible_system != 'Darwin'
+
+    - name: Download Emacs source archive
+      ansible.builtin.get_url:
+        url: "https://ftp.jaist.ac.jp/pub/GNU/emacs/emacs-{{ emacs_version }}.tar.xz"
+        dest: "/tmp/emacs-{{ emacs_version }}.tar.xz"
+        mode: "0644"
+      when: ansible_system != 'Darwin'
+
+    - name: Extract Emacs source archive
+      ansible.builtin.unarchive:
+        src: "/tmp/emacs-{{ emacs_version }}.tar.xz"
+        dest: /tmp
+        remote_src: true
+        creates: "/tmp/emacs-{{ emacs_version }}/configure"
+      when: ansible_system != 'Darwin'
+
+    - name: Build and install Emacs
+      ansible.builtin.shell: "./configure --prefix={{ emacs_prefix }} --with-x-toolkit=no && make && make install"
+      args:
+        chdir: "/tmp/emacs-{{ emacs_version }}"
+        creates: "{{ emacs_binary }}"
+      become: true
+      when: ansible_system != 'Darwin'
+
+    - name: Ensure Emacs configuration directories exist
+      ansible.builtin.file:
+        path: "{{ emacs_home }}/{{ item }}"
+        state: directory
+        owner: "{{ emacs_owner }}"
+        group: "{{ emacs_group }}"
+        mode: "0775"
+      loop: "{{ emacs_directories }}"
+      when: emacs_write_config
+
+    - name: Refresh Emacs package metadata
+      ansible.builtin.command:
+        argv:
+          - "{{ emacs_binary }}"
+          - --batch
+          - -l
+          - "{{ playbook_dir }}/files/default/default_dot_emacs"
+          - -q
+          - --eval
+          - "(progn (require 'package) (package-refresh-contents))"
+      changed_when: false
+      when: emacs_packages | length > 0
+
+    - name: Check configured Emacs packages
+      ansible.builtin.command:
+        argv:
+          - "{{ emacs_binary }}"
+          - --batch
+          - -l
+          - "{{ playbook_dir }}/files/default/default_dot_emacs"
+          - -q
+          - --eval
+          - "(if (package-installed-p '{{ item }}') (kill-emacs 0) (kill-emacs 1))"
+      loop: "{{ emacs_packages }}"
+      register: emacs_package_check
+      changed_when: false
+      failed_when: false
+      check_mode: false
+      when: emacs_packages | length > 0
+
+    - name: Install missing Emacs packages
+      ansible.builtin.command:
+        argv:
+          - "{{ emacs_binary }}"
+          - --batch
+          - -l
+          - "{{ playbook_dir }}/files/default/default_dot_emacs"
+          - -q
+          - --eval
+          - "(package-install '{{ item.item }}')"
+      loop: "{{ emacs_package_check.results | default([]) }}"
+      when: not ansible_check_mode and item.rc != 0
+
+    - name: Install customized Emacs configuration
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/files/default/dot_emacs"
+        dest: "{{ emacs_home }}/.emacs"
+        owner: "{{ emacs_owner }}"
+        group: "{{ emacs_group }}"
+        mode: "0644"
+        backup: true
+      when: emacs_write_config
+
+    - name: Install Emacs Lisp configuration
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/files/{{ item }}/init.el"
+        dest: "{{ emacs_home }}/{{ emacs_site_lisp_dir }}/{{ item }}/init.el"
+        owner: "{{ emacs_owner }}"
+        group: "{{ emacs_group }}"
+        mode: "0644"
+        backup: true
+      loop: "{{ emacs_site_lisp_configs }}"
+      when: emacs_write_config
+
+    - name: Ensure snippet directories exist
+      ansible.builtin.file:
+        path: "{{ emacs_home }}/.emacs.d/snippets"
+        state: directory
+        owner: "{{ emacs_owner }}"
+        group: "{{ emacs_group }}"
+        mode: "0775"
+      when: emacs_put_snippets
+
+    - name: Install Emacs snippets
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/files/snippets/{{ item }}-mode/"
+        dest: "{{ emacs_home }}/.emacs.d/snippets/{{ item }}-mode/"
+        owner: "{{ emacs_owner }}"
+        group: "{{ emacs_group }}"
+        mode: "0644"
+        directory_mode: "0775"
+      loop:
+        - ruby
+        - python
+      when: emacs_put_snippets
