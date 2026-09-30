@@ -2,11 +2,11 @@
 emacs_version: "{{ lookup('env', 'VERSION') | default('30.1', true) }}"
 emacs_home: "{{ lookup('env', 'HOME') }}"
 emacs_owner: "{{ lookup('env', 'OWNER') | default(lookup('env', 'USER'), true) }}"
-emacs_group: "{{ lookup('env', 'GROUP') | default('staff' if ansible_system == 'Darwin' else ansible_user_gid | string, true) }}"
-emacs_install_dir: "{{ lookup('env', 'EMACS_INSTALL_DIR') | default('/opt/homebrew/bin' if ansible_system == 'Darwin' and ansible_architecture == 'arm64' else '/usr/local/bin', true) }}"
+emacs_group: "{{ lookup('env', 'GROUP') | default('staff' if ansible_facts['system'] == 'Darwin' else ansible_facts['user_gid'] | string, true) }}"
+emacs_install_dir: "{{ lookup('env', 'EMACS_INSTALL_DIR') | default('/opt/homebrew/bin' if ansible_facts['system'] == 'Darwin' and ansible_facts['architecture'] == 'arm64' else '/usr/local/bin', true) }}"
 emacs_binary: "{{ emacs_install_dir }}/emacs"
 emacs_prefix: "{{ emacs_install_dir | dirname }}"
-homebrew_bin: "{{ lookup('env', 'HOMEBREW_BIN') | default('/opt/homebrew/bin/brew' if ansible_architecture == 'arm64' else '/usr/local/bin/brew', true) }}"
+homebrew_bin: "{{ lookup('env', 'HOMEBREW_BIN') | default('/opt/homebrew/bin/brew' if ansible_facts['architecture'] == 'arm64' else '/usr/local/bin/brew', true) }}"
 emacs_write_config: true
 emacs_put_snippets: true
 emacs_site_lisp_dir: .emacs.d/site-lisp
@@ -34,6 +34,8 @@ emacs_build_dependencies:
   Debian:
     - gcc
     - make
+    - pkg-config
+    - xz-utils
     - libncurses-dev
     - libxpm-dev
     - libjpeg-dev
@@ -45,6 +47,8 @@ emacs_build_dependencies:
   RedHat:
     - gcc
     - make
+    - pkgconfig
+    - xz
     - ncurses-devel
     - libXpm-devel
     - libjpeg-devel

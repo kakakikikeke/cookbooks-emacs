@@ -38,3 +38,12 @@ Use `--check --diff` to preview supported changes.
 ```bash
 ansible-playbook --syntax-check -i localhost, playbook.yml
 ```
+
+## Test in Docker
+
+The Docker test runs Ansible and installs Emacs inside a disposable Ubuntu 24.04 container. The repository is mounted read-only, so configuration files on the host are not modified. The test also checks installed files and verifies a second playbook run reports no changes.
+
+```bash
+docker build -f test/docker/Dockerfile -t cookbooks-emacs-ansible-test .
+docker run --rm -v "$PWD:/workspace:ro" cookbooks-emacs-ansible-test
+```
