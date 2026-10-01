@@ -1,4 +1,4 @@
-# cookbooks-emacs on macOS
+# emacs-playbook on macOS
 
 Install and configure Emacs on macOS with Ansible and Homebrew.
 
@@ -38,6 +38,6 @@ ansible-playbook --syntax-check -i localhost, playbook.yml
 The Docker test runs Ansible and installs Emacs inside a disposable Ubuntu 24.04 container. The repository is mounted read-only, so configuration files on the host are not modified. The test also checks installed files and verifies a second playbook run reports no changes.
 
 ```bash
-docker build -f test/docker/Dockerfile -t cookbooks-emacs-ansible-test .
-docker run --rm -v "$PWD:/workspace:ro" cookbooks-emacs-ansible-test
+docker build -f test/docker/Dockerfile -t emacs-playbook-ansible-test .
+docker run --rm -v "$PWD:/workspace:ro" emacs-playbook-ansible-test
 ```

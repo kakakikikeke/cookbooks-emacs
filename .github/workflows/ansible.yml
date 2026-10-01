@@ -14,6 +14,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Build Docker test image
-        run: docker build -f test/docker/Dockerfile -t cookbooks-emacs-ansible-test .
+        run: docker build -f test/docker/Dockerfile -t emacs-playbook-ansible-test .
       - name: Run Ansible integration test
-        run: docker run --rm -v "${GITHUB_WORKSPACE}:/workspace:ro" cookbooks-emacs-ansible-test
+        run: docker run --rm -v "${GITHUB_WORKSPACE}:/workspace:ro" emacs-playbook-ansible-test
